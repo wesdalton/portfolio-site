@@ -142,9 +142,32 @@ export async function GET() {
       }
     }
 
-    // Nothing found
-    console.log('No track found');
-    return NextResponse.json({ isPlaying: false, track: null }, { headers });
+    // No track found, provide a fallback song
+    console.log('No track found, using fallback');
+    
+    const fallbackTrack = {
+      album: {
+        name: "Blonde",
+        images: [{ url: "https://i.scdn.co/image/ab67616d0000b2737004048e5dc4b8cf798d168b" }]
+      },
+      artists: [{ name: "Frank Ocean" }],
+      name: "Ivy",
+      external_urls: {
+        spotify: "https://open.spotify.com/track/2ZWlPOoWh0626oTaHrnl2a"
+      },
+      id: "2ZWlPOoWh0626oTaHrnl2a"
+    };
+    
+    // Cache this fallback so we don't need to build it again
+    recentlyPlayedCache = {
+      track: fallbackTrack,
+      timestamp: now,
+    };
+    
+    return NextResponse.json({ 
+      isPlaying: false, 
+      track: fallbackTrack 
+    }, { headers });
   } catch (error) {
     console.error('Error in Spotify API:', error);
     return NextResponse.json(

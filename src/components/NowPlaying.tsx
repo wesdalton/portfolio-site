@@ -84,9 +84,30 @@ export default function NowPlaying() {
               </div>
             </div>
           ) : error ? (
-            <div className="text-sm text-textSecondary">
-              Unable to connect to Spotify
-            </div>
+            <a 
+              href="https://open.spotify.com/track/2ZWlPOoWh0626oTaHrnl2a"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex space-x-3 items-center hover-lift"
+            >
+              <div className="h-12 w-12 rounded-md shadow-md overflow-hidden relative">
+                <img 
+                  src="https://i.scdn.co/image/ab67616d0000b2737004048e5dc4b8cf798d168b" 
+                  alt="Blonde album cover"
+                  className="h-full w-full object-cover"
+                  width={48}
+                  height={48}
+                />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm text-textPrimary font-medium truncate">
+                  Ivy
+                </p>
+                <p className="text-xs text-textSecondary truncate">
+                  Frank Ocean
+                </p>
+              </div>
+            </a>
           ) : track ? (
             <a 
               href={track.external_urls.spotify}
@@ -113,9 +134,30 @@ export default function NowPlaying() {
               </div>
             </a>
           ) : (
-            <div className="text-sm text-textSecondary">
-              Not playing anything right now
-            </div>
+            <a 
+              href="https://open.spotify.com/track/2ZWlPOoWh0626oTaHrnl2a"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex space-x-3 items-center hover-lift"
+            >
+              <div className="h-12 w-12 rounded-md shadow-md overflow-hidden relative">
+                <img 
+                  src="https://i.scdn.co/image/ab67616d0000b2737004048e5dc4b8cf798d168b" 
+                  alt="Blonde album cover"
+                  className="h-full w-full object-cover"
+                  width={48}
+                  height={48}
+                />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm text-textPrimary font-medium truncate">
+                  Ivy
+                </p>
+                <p className="text-xs text-textSecondary truncate">
+                  Frank Ocean
+                </p>
+              </div>
+            </a>
           )}
         </div>
       </motion.div>
