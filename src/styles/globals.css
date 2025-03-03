@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 204, 214, 246;
+  --background-start-rgb: 10, 25, 47;
+  --background-end-rgb: 10, 25, 47;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}
+
+@layer components {
+  .section-heading {
+    @apply flex items-center mb-10 text-2xl font-semibold text-textPrimary;
+  }
+  
+  .section-heading::before {
+    @apply mr-2 text-secondary font-mono text-lg;
+    counter-increment: section;
+    content: "0" counter(section) ".";
+  }
+  
+  .section-heading::after {
+    @apply ml-4 w-48 h-px bg-tertiary;
+    content: "";
+  }
+  
+  .nav-link {
+    @apply px-4 py-2 text-sm text-textSecondary hover:text-secondary transition-colors duration-200;
+  }
+  
+  .nav-link .nav-counter {
+    @apply text-secondary font-mono mr-1;
+  }
+  
+  .button-primary {
+    @apply px-4 py-2 border border-secondary text-secondary rounded hover:bg-secondary/10 transition-colors duration-200 font-mono text-sm;
+  }
+  
+  .tech-tag {
+    @apply px-3 py-1 rounded-full text-xs font-mono bg-tertiary text-secondary mr-2 mb-2;
+  }
+  
+  .glass-effect {
+    @apply backdrop-blur-md bg-tertiary/30 border border-tertiary/50 shadow-lg;
+  }
+  
+  .hover-lift {
+    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-lg;
+  }
+  
+  .card-effect {
+    @apply bg-tertiary rounded-lg p-4 shadow-md transition-transform duration-300 hover:-translate-y-1 hover:shadow-xl;
+  }
+}
+
+/* Reset counter for each page */
+#__next {
+  counter-reset: section;
+}
