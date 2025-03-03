@@ -103,7 +103,7 @@ export default function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              <span>I build</span>
+              <span>I build<span className="text-textPrimary">.</span></span>
               
               <span 
                 className="text-secondary inline-block relative after:content-[''] after:absolute after:right-0 after:top-0 after:h-full after:w-[2px] after:bg-secondary after:animate-[blink_0.85s_infinite]"
