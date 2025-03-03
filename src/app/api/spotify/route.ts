@@ -16,7 +16,25 @@ let tokenCache = {
   expires_at: 0, // timestamp when the token expires
 };
 
-let recentlyPlayedCache = {
+// Define the track type
+interface SpotifyTrack {
+  album: {
+    name: string;
+    images: { url: string }[];
+  };
+  artists: { name: string }[];
+  name: string;
+  external_urls: {
+    spotify: string;
+  };
+  id: string;
+}
+
+// Cache for recently played
+let recentlyPlayedCache: {
+  track: SpotifyTrack | null;
+  timestamp: number;
+} = {
   track: null,
   timestamp: 0, // timestamp when the cache was last updated
 };
@@ -78,18 +96,21 @@ export async function GET() {
       // Only return if actually playing (could be paused)
       if (song.is_playing && song.item) {
         console.log('Currently playing track found');
+        
+        const currentTrack: SpotifyTrack = {
+          album: {
+            name: song.item.album.name,
+            images: song.item.album.images,
+          },
+          artists: song.item.artists,
+          name: song.item.name,
+          external_urls: song.item.external_urls,
+          id: song.item.id,
+        };
+        
         return NextResponse.json({
           isPlaying: true,
-          track: {
-            album: {
-              name: song.item.album.name,
-              images: song.item.album.images,
-            },
-            artists: song.item.artists,
-            name: song.item.name,
-            external_urls: song.item.external_urls,
-            id: song.item.id,
-          },
+          track: currentTrack,
         }, { headers });
       }
     }
@@ -119,25 +140,28 @@ export async function GET() {
       if (items && items.length > 0) {
         const song = items[0].track;
         
+        // Create track with proper type
+        const recentTrack: SpotifyTrack = {
+          album: {
+            name: song.album.name,
+            images: song.album.images,
+          },
+          artists: song.artists,
+          name: song.name,
+          external_urls: song.external_urls,
+          id: song.id,
+        };
+        
         // Cache the recently played track
         recentlyPlayedCache = {
-          track: {
-            album: {
-              name: song.album.name,
-              images: song.album.images,
-            },
-            artists: song.artists,
-            name: song.name,
-            external_urls: song.external_urls,
-            id: song.id,
-          },
+          track: recentTrack,
           timestamp: now,
         };
         
         console.log('Recently played track found');
         return NextResponse.json({
           isPlaying: false,
-          track: recentlyPlayedCache.track,
+          track: recentTrack,
         }, { headers });
       }
     }
@@ -145,7 +169,7 @@ export async function GET() {
     // No track found, provide a fallback song
     console.log('No track found, using fallback');
     
-    const fallbackTrack = {
+    const fallbackTrack: SpotifyTrack = {
       album: {
         name: "Blonde",
         images: [{ url: "https://i.scdn.co/image/ab67616d0000b2737004048e5dc4b8cf798d168b" }]
