@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FaSpotify } from 'react-icons/fa';
 import useSWR from 'swr';
@@ -34,17 +34,35 @@ const fetcher = (url: string) => fetch(url)
 export default function NowPlaying() {
   const [expanded, setExpanded] = useState(true);
   
+  // Add a random query parameter to bust cache
+  const cacheKey = `/api/spotify?_=${Date.now()}`;
+  
   // Use SWR for data fetching with auto-revalidation
-  const { data, error, isLoading } = useSWR<SpotifyData>(
-    '/api/spotify',
+  const { data, error, isLoading, mutate } = useSWR<SpotifyData>(
+    cacheKey,
     fetcher,
     {
-      refreshInterval: 10000, // Refresh every 10 seconds
+      refreshInterval: 5000, // Refresh every 5 seconds
       revalidateOnFocus: true,
       revalidateOnReconnect: true,
-      dedupingInterval: 5000, // Only revalidate after 5 seconds
+      revalidateIfStale: true,
+      dedupingInterval: 2000, // Only revalidate after 2 seconds
     }
   );
+  
+  // Force refresh on mount and periodically
+  useEffect(() => {
+    // Force an initial revalidation
+    mutate();
+    
+    // Set up an interval to force revalidation
+    const interval = setInterval(() => {
+      console.log('Forcing Spotify data refresh');
+      mutate();
+    }, 7000); // Every 7 seconds
+    
+    return () => clearInterval(interval);
+  }, [mutate]);
 
   const track = data?.track;
   const isPlaying = data?.isPlaying;

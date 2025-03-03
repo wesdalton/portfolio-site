@@ -72,11 +72,15 @@ const getAccessToken = async () => {
   return { access_token: data.access_token };
 };
 
+export const dynamic = 'force-dynamic'; // Force the route to be dynamically evaluated for each request
+
 export async function GET() {
   try {
-    // Set cache control headers to improve performance
+    // Set cache control headers to prevent caching
     const headers = {
-      'Cache-Control': 'public, s-maxage=10, stale-while-revalidate=59',
+      'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+      'Pragma': 'no-cache',
+      'Expires': '0',
     };
 
     const { access_token } = await getAccessToken();
@@ -115,9 +119,9 @@ export async function GET() {
       }
     }
 
-    // Check if we have recently played cache that's less than 2 minutes old
+    // Check if we have recently played cache that's less than 30 seconds old
     const now = Date.now();
-    if (recentlyPlayedCache.track && now - recentlyPlayedCache.timestamp < 120000) {
+    if (recentlyPlayedCache.track && now - recentlyPlayedCache.timestamp < 30000) {
       console.log('Using cached recently played track');
       return NextResponse.json({
         isPlaying: false,
