@@ -30,13 +30,17 @@ interface SpotifyTrack {
   id: string;
 }
 
-// Cache for recently played
-let recentlyPlayedCache: {
-  track: SpotifyTrack | null;
+// Cache for recently played and current track
+let trackCache: {
+  currentlyPlaying: SpotifyTrack | null;
+  recentlyPlayed: SpotifyTrack | null;
   timestamp: number;
+  currentlyPlayingTimestamp: number;
 } = {
-  track: null,
-  timestamp: 0, // timestamp when the cache was last updated
+  currentlyPlaying: null,
+  recentlyPlayed: null,
+  timestamp: 0, // timestamp when the recently played was last updated
+  currentlyPlayingTimestamp: 0, // timestamp when currently playing was last updated
 };
 
 const getAccessToken = async () => {
@@ -76,98 +80,118 @@ export const dynamic = 'force-dynamic'; // Force the route to be dynamically eva
 
 export async function GET() {
   try {
-    // Set cache control headers to prevent caching
+    // Set cache control headers for 15 seconds
     const headers = {
-      'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
-      'Pragma': 'no-cache',
-      'Expires': '0',
+      'Cache-Control': 'max-age=15, stale-while-revalidate=60',
     };
 
+    const now = Date.now();
     const { access_token } = await getAccessToken();
 
-    // First try to get currently playing
-    console.log('Fetching currently playing track');
-    const nowPlayingResponse = await fetch(NOW_PLAYING_ENDPOINT, {
-      headers: {
-        Authorization: `Bearer ${access_token}`,
-      },
-    });
-
-    // If currently playing exists and is valid (status 200), return it
-    if (nowPlayingResponse.status === 200) {
-      const song = await nowPlayingResponse.json();
-      
-      // Only return if actually playing (could be paused)
-      if (song.is_playing && song.item) {
-        console.log('Currently playing track found');
-        
-        const currentTrack: SpotifyTrack = {
-          album: {
-            name: song.item.album.name,
-            images: song.item.album.images,
-          },
-          artists: song.item.artists,
-          name: song.item.name,
-          external_urls: song.item.external_urls,
-          id: song.item.id,
-        };
-        
-        return NextResponse.json({
-          isPlaying: true,
-          track: currentTrack,
-        }, { headers });
-      }
+    // Check for currently playing track cache (valid for 20 seconds)
+    if (trackCache.currentlyPlaying && now - trackCache.currentlyPlayingTimestamp < 20000) {
+      console.log('Using cached currently playing track');
+      return NextResponse.json({
+        isPlaying: true,
+        track: trackCache.currentlyPlaying,
+      }, { headers });
     }
 
-    // Check if we have recently played cache that's less than 30 seconds old
-    const now = Date.now();
-    if (recentlyPlayedCache.track && now - recentlyPlayedCache.timestamp < 30000) {
+    // Try to get currently playing track 
+    console.log('Fetching currently playing track');
+    try {
+      const nowPlayingResponse = await fetch(NOW_PLAYING_ENDPOINT, {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+        cache: 'no-store',
+      });
+
+      // If currently playing exists and is valid (status 200), return it
+      if (nowPlayingResponse.status === 200) {
+        const song = await nowPlayingResponse.json();
+        
+        // Only return if actually playing (could be paused)
+        if (song.is_playing && song.item) {
+          console.log('Currently playing track found');
+          
+          const currentTrack: SpotifyTrack = {
+            album: {
+              name: song.item.album.name,
+              images: song.item.album.images,
+            },
+            artists: song.item.artists,
+            name: song.item.name,
+            external_urls: song.item.external_urls,
+            id: song.item.id,
+          };
+          
+          // Update currently playing cache
+          trackCache.currentlyPlaying = currentTrack;
+          trackCache.currentlyPlayingTimestamp = now;
+          
+          return NextResponse.json({
+            isPlaying: true,
+            track: currentTrack,
+          }, { headers });
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching currently playing:', error);
+      // Continue to recently played if there's an error
+    }
+
+    // Check for recently played cache (valid for 2 minutes)
+    if (trackCache.recentlyPlayed && now - trackCache.timestamp < 120000) {
       console.log('Using cached recently played track');
       return NextResponse.json({
         isPlaying: false,
-        track: recentlyPlayedCache.track,
+        track: trackCache.recentlyPlayed,
       }, { headers });
     }
 
     // If nothing playing, fallback to recently played
     console.log('Fetching recently played tracks');
-    const recentlyPlayedResponse = await fetch(RECENTLY_PLAYED_ENDPOINT, {
-      headers: {
-        Authorization: `Bearer ${access_token}`,
-      },
-      cache: 'no-store', // Ensure we don't use browser cache
-    });
+    try {
+      const recentlyPlayedResponse = await fetch(RECENTLY_PLAYED_ENDPOINT, {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+        cache: 'no-store',
+      });
 
-    if (recentlyPlayedResponse.status === 200) {
-      const { items } = await recentlyPlayedResponse.json();
-      
-      if (items && items.length > 0) {
-        const song = items[0].track;
+      if (recentlyPlayedResponse.status === 200) {
+        const { items } = await recentlyPlayedResponse.json();
         
-        // Create track with proper type
-        const recentTrack: SpotifyTrack = {
-          album: {
-            name: song.album.name,
-            images: song.album.images,
-          },
-          artists: song.artists,
-          name: song.name,
-          external_urls: song.external_urls,
-          id: song.id,
-        };
-        
-        // Cache the recently played track
-        recentlyPlayedCache = {
-          track: recentTrack,
-          timestamp: now,
-        };
-        
-        console.log('Recently played track found');
-        return NextResponse.json({
-          isPlaying: false,
-          track: recentTrack,
-        }, { headers });
+        if (items && items.length > 0) {
+          const song = items[0].track;
+          
+          // Create track with proper type
+          const recentTrack: SpotifyTrack = {
+            album: {
+              name: song.album.name,
+              images: song.album.images,
+            },
+            artists: song.artists,
+            name: song.name,
+            external_urls: song.external_urls,
+            id: song.id,
+          };
+          
+          // Cache the recently played track
+          trackCache.recentlyPlayed = recentTrack;
+          trackCache.timestamp = now;
+          
+          console.log('Recently played track found');
+          return NextResponse.json({
+            isPlaying: false,
+            track: recentTrack,
+          }, { headers });
+        }
       }
+    } catch (error) {
+      console.error('Error fetching recently played:', error);
+      // Fall through to fallback if there's an error
     }
 
     // No track found, provide a fallback song
@@ -187,10 +211,8 @@ export async function GET() {
     };
     
     // Cache this fallback so we don't need to build it again
-    recentlyPlayedCache = {
-      track: fallbackTrack,
-      timestamp: now,
-    };
+    trackCache.recentlyPlayed = fallbackTrack;
+    trackCache.timestamp = now;
     
     return NextResponse.json({ 
       isPlaying: false, 

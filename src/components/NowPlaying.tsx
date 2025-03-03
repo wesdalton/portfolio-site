@@ -21,52 +21,74 @@ interface SpotifyData {
   track: SpotifyTrack | null;
 }
 
-const fetcher = (url: string) => fetch(url)
-  .then((res) => {
-    if (!res.ok) throw new Error('Failed to fetch');
-    return res.json();
-  })
-  .then(data => {
-    console.log("Spotify data refreshed:", data);
-    return data;
-  });
+// Fallback data to always show something
+const fallbackData: SpotifyData = {
+  isPlaying: false,
+  track: {
+    album: {
+      name: "Blonde",
+      images: [{ url: "https://i.scdn.co/image/ab67616d0000b2737004048e5dc4b8cf798d168b" }]
+    },
+    artists: [{ name: "Frank Ocean" }],
+    name: "Ivy",
+    external_urls: {
+      spotify: "https://open.spotify.com/track/2ZWlPOoWh0626oTaHrnl2a"
+    },
+    id: "2ZWlPOoWh0626oTaHrnl2a"
+  }
+};
+
+const fetcher = (url: string) => 
+  fetch(url)
+    .then((res) => {
+      if (!res.ok) throw new Error('Failed to fetch');
+      return res.json();
+    })
+    .catch(err => {
+      console.error('Error fetching Spotify data:', err);
+      // Return fallback on error
+      return fallbackData;
+    });
 
 export default function NowPlaying() {
   const [expanded, setExpanded] = useState(true);
+  // State to track if we need to show fallback after timeout
+  const [showFallback, setShowFallback] = useState(false);
   
-  // Add a random query parameter to bust cache
-  const cacheKey = `/api/spotify?_=${Date.now()}`;
+  // Use a stable URL to prevent excessive revalidation
+  // But still add a small query param for cache control
+  const cacheKey = `/api/spotify?v=1`;
   
-  // Use SWR for data fetching with auto-revalidation
-  const { data, error, isLoading, mutate } = useSWR<SpotifyData>(
+  // Use SWR for data fetching
+  const { data, error, isLoading } = useSWR<SpotifyData>(
     cacheKey,
     fetcher,
     {
-      refreshInterval: 5000, // Refresh every 5 seconds
+      refreshInterval: 15000, // Less aggressive refresh (15s)
       revalidateOnFocus: true,
-      revalidateOnReconnect: true,
-      revalidateIfStale: true,
-      dedupingInterval: 2000, // Only revalidate after 2 seconds
+      dedupingInterval: 5000,
+      fallbackData: fallbackData, // Always have fallback data
     }
   );
   
-  // Force refresh on mount and periodically
+  // If loading takes too long, show fallback
   useEffect(() => {
-    // Force an initial revalidation
-    mutate();
-    
-    // Set up an interval to force revalidation
-    const interval = setInterval(() => {
-      console.log('Forcing Spotify data refresh');
-      mutate();
-    }, 7000); // Every 7 seconds
-    
-    return () => clearInterval(interval);
-  }, [mutate]);
+    if (isLoading) {
+      // If still loading after 3 seconds, show fallback
+      const timeout = setTimeout(() => {
+        setShowFallback(true);
+      }, 3000);
+      
+      return () => clearTimeout(timeout);
+    } else {
+      setShowFallback(false);
+    }
+  }, [isLoading]);
 
-  const track = data?.track;
-  const isPlaying = data?.isPlaying;
-  const loading = isLoading;
+  // Get track info from data or fallback
+  const track = data?.track || fallbackData.track;
+  const isPlaying = data?.isPlaying || false;
+  const loading = isLoading && !showFallback;
 
     return (
       <motion.div
@@ -101,32 +123,7 @@ export default function NowPlaying() {
                 <div className="h-2 bg-tertiary rounded w-5/6"></div>
               </div>
             </div>
-          ) : error ? (
-            <a 
-              href="https://open.spotify.com/track/2ZWlPOoWh0626oTaHrnl2a"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex space-x-3 items-center hover-lift"
-            >
-              <div className="h-12 w-12 rounded-md shadow-md overflow-hidden relative">
-                <img 
-                  src="https://i.scdn.co/image/ab67616d0000b2737004048e5dc4b8cf798d168b" 
-                  alt="Blonde album cover"
-                  className="h-full w-full object-cover"
-                  width={48}
-                  height={48}
-                />
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-sm text-textPrimary font-medium truncate">
-                  Ivy
-                </p>
-                <p className="text-xs text-textSecondary truncate">
-                  Frank Ocean
-                </p>
-              </div>
-            </a>
-          ) : track ? (
+          ) : (
             <a 
               href={track.external_urls.spotify}
               target="_blank"
@@ -148,31 +145,6 @@ export default function NowPlaying() {
                 </p>
                 <p className="text-xs text-textSecondary truncate">
                   {track.artists.map(artist => artist.name).join(', ')}
-                </p>
-              </div>
-            </a>
-          ) : (
-            <a 
-              href="https://open.spotify.com/track/2ZWlPOoWh0626oTaHrnl2a"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex space-x-3 items-center hover-lift"
-            >
-              <div className="h-12 w-12 rounded-md shadow-md overflow-hidden relative">
-                <img 
-                  src="https://i.scdn.co/image/ab67616d0000b2737004048e5dc4b8cf798d168b" 
-                  alt="Blonde album cover"
-                  className="h-full w-full object-cover"
-                  width={48}
-                  height={48}
-                />
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-sm text-textPrimary font-medium truncate">
-                  Ivy
-                </p>
-                <p className="text-xs text-textSecondary truncate">
-                  Frank Ocean
                 </p>
               </div>
             </a>
