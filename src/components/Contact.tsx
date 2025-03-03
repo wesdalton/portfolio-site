@@ -95,7 +95,7 @@ export default function Contact() {
             <FiLinkedin size={24} />
           </a>
           <a 
-            href="https://github.com/"
+            href="https://github.com/makeAticket"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-secondary transition-colors"

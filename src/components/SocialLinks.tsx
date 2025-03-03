@@ -3,7 +3,7 @@ import { FiGithub, FiLinkedin, FiMail } from 'react-icons/fi';
 
 export default function SocialLinks() {
   const socialLinks = [
-    { icon: <FiGithub />, url: 'https://github.com/', label: 'GitHub' },
+    { icon: <FiGithub />, url: 'https://github.com/makeAticket', label: 'GitHub' },
     { icon: <FiLinkedin />, url: 'https://linkedin.com/in/wesley-dalton/', label: 'LinkedIn' },
     { icon: <FiMail />, url: 'mailto:wdalton@seas.upenn.edu', label: 'Email' },
   ];
