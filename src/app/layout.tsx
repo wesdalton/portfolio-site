@@ -10,6 +10,14 @@ export const metadata: Metadata = {
   description: 'UPenn CS & History student with experience in AI, software engineering, and product development.',
   keywords: 'Wesley Dalton, Software Engineer, AI, Machine Learning, UPenn, Portfolio',
   authors: [{ name: 'Wesley Dalton' }],
+  icons: {
+    icon: [
+      { url: '/favicon.svg' },
+    ],
+    apple: [
+      { url: '/apple-touch-icon.svg' },
+    ],
+  },
   openGraph: {
     title: 'Wesley Dalton | Software Engineer',
     description: 'UPenn CS & History student with experience in AI, software engineering, and product development.',
@@ -17,7 +25,7 @@ export const metadata: Metadata = {
     siteName: 'Wesley Dalton Portfolio',
     images: [
       {
-        url: '/images/og-image.jpg',
+        url: '/images/headshot.jpeg',
         width: 1200,
         height: 630,
         alt: 'Wesley Dalton Portfolio',
