@@ -1,89 +1,54 @@
-import { useState, useEffect } from 'react';
-  import { motion } from 'framer-motion';
-  import { FiMusic } from 'react-icons/fi';
-  import { FaSpotify } from 'react-icons/fa';
+import { useState } from 'react';
+import { motion } from 'framer-motion';
+import { FaSpotify } from 'react-icons/fa';
+import useSWR from 'swr';
 
-  interface SpotifyTrack {
-    album: {
-      name: string;
-      images: { url: string }[];
-    };
-    artists: { name: string }[];
+interface SpotifyTrack {
+  album: {
     name: string;
-    external_urls: {
-      spotify: string;
-    };
-    id: string;
-  }
+    images: { url: string }[];
+  };
+  artists: { name: string }[];
+  name: string;
+  external_urls: {
+    spotify: string;
+  };
+  id: string;
+}
 
-  interface SpotifyData {
-    isPlaying: boolean;
-    track: SpotifyTrack | null;
-  }
+interface SpotifyData {
+  isPlaying: boolean;
+  track: SpotifyTrack | null;
+}
 
-  export default function NowPlaying() {
-    const [data, setData] = useState<SpotifyData | null>(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(false);
+const fetcher = (url: string) => fetch(url)
+  .then((res) => {
+    if (!res.ok) throw new Error('Failed to fetch');
+    return res.json();
+  })
+  .then(data => {
+    console.log("Spotify data refreshed:", data);
+    return data;
+  });
 
-    // Initial data fetch (with loading state)
-    const initialFetch = async () => {
-      try {
-        setLoading(true);
-        const response = await fetch('/api/spotify');
-        if (!response.ok) {
-          throw new Error('Failed to fetch');
-        }
-        const newData = await response.json();
-        setData(newData);
-        setError(false);
-      } catch (error) {
-        console.error('Error fetching now playing:', error);
-        setError(true);
-      } finally {
-        setLoading(false);
-      }
-    };
-    
-    // Silent refresh (no loading state)
-    const silentRefresh = async () => {
-      try {
-        console.log("Refreshing Spotify data...");
-        const response = await fetch('/api/spotify');
-        if (!response.ok) {
-          console.log("Spotify refresh failed - response not OK");
-          return; // Silently fail on refresh
-        }
-        const newData = await response.json();
-        console.log("Got new Spotify data:", newData);
-        
-        // Always update the data to ensure freshness
-        setData(newData);
-        setError(false);
-      } catch (error) {
-        console.error('Error refreshing Spotify data:', error);
-        // Don't set error state on silent refresh
-      }
-    };
+export default function NowPlaying() {
+  const [expanded, setExpanded] = useState(true);
+  
+  // Use SWR for data fetching with auto-revalidation
+  const { data, error, isLoading } = useSWR<SpotifyData>(
+    '/api/spotify',
+    fetcher,
+    {
+      refreshInterval: 10000, // Refresh every 10 seconds
+      revalidateOnFocus: true,
+      revalidateOnReconnect: true,
+      dedupingInterval: 5000, // Only revalidate after 5 seconds
+    }
+  );
 
-    useEffect(() => {
-      // Initial fetch when component mounts
-      initialFetch();
-
-      // Immediate first refresh after 3 seconds
-      const initialTimeout = setTimeout(silentRefresh, 3000);
-      
-      // Set up silent refresh interval (every 5 seconds)
-      const interval = setInterval(silentRefresh, 5000);
-
-      return () => {
-        clearTimeout(initialTimeout);
-        clearInterval(interval);
-      };
-    }, []);
-
-    const track = data?.track;
-    const isPlaying = data?.isPlaying;
+  const track = data?.track;
+  const isPlaying = data?.isPlaying;
+  const loading = isLoading;
 
     return (
       <motion.div

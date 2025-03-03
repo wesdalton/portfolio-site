@@ -10,7 +10,26 @@ const NOW_PLAYING_ENDPOINT = `https://api.spotify.com/v1/me/player/currently-pla
 const RECENTLY_PLAYED_ENDPOINT = `https://api.spotify.com/v1/me/player/recently-played?limit=1`;
 const TOKEN_ENDPOINT = `https://accounts.spotify.com/api/token`;
 
+// Cache for the access token and recently played tracks
+let tokenCache = {
+  access_token: '',
+  expires_at: 0, // timestamp when the token expires
+};
+
+let recentlyPlayedCache = {
+  track: null,
+  timestamp: 0, // timestamp when the cache was last updated
+};
+
 const getAccessToken = async () => {
+  // Check if we have a cached token that is still valid
+  const now = Date.now();
+  if (tokenCache.access_token && now < tokenCache.expires_at) {
+    console.log('Using cached access token');
+    return { access_token: tokenCache.access_token };
+  }
+
+  console.log('Fetching new access token');
   const response = await fetch(TOKEN_ENDPOINT, {
     method: 'POST',
     headers: {
@@ -23,14 +42,29 @@ const getAccessToken = async () => {
     }),
   });
 
-  return response.json();
+  const data = await response.json();
+  
+  // Cache the token with an expiry time
+  // Spotify tokens typically last for 1 hour, but we'll use 50 minutes to be safe
+  tokenCache = {
+    access_token: data.access_token,
+    expires_at: now + (data.expires_in * 1000 || 3000000), // 50 minutes in ms or default to 50min
+  };
+  
+  return { access_token: data.access_token };
 };
 
 export async function GET() {
   try {
+    // Set cache control headers to improve performance
+    const headers = {
+      'Cache-Control': 'public, s-maxage=10, stale-while-revalidate=59',
+    };
+
     const { access_token } = await getAccessToken();
 
     // First try to get currently playing
+    console.log('Fetching currently playing track');
     const nowPlayingResponse = await fetch(NOW_PLAYING_ENDPOINT, {
       headers: {
         Authorization: `Bearer ${access_token}`,
@@ -42,7 +76,8 @@ export async function GET() {
       const song = await nowPlayingResponse.json();
       
       // Only return if actually playing (could be paused)
-      if (song.is_playing) {
+      if (song.is_playing && song.item) {
+        console.log('Currently playing track found');
         return NextResponse.json({
           isPlaying: true,
           track: {
@@ -55,15 +90,27 @@ export async function GET() {
             external_urls: song.item.external_urls,
             id: song.item.id,
           },
-        });
+        }, { headers });
       }
     }
 
+    // Check if we have recently played cache that's less than 2 minutes old
+    const now = Date.now();
+    if (recentlyPlayedCache.track && now - recentlyPlayedCache.timestamp < 120000) {
+      console.log('Using cached recently played track');
+      return NextResponse.json({
+        isPlaying: false,
+        track: recentlyPlayedCache.track,
+      }, { headers });
+    }
+
     // If nothing playing, fallback to recently played
+    console.log('Fetching recently played tracks');
     const recentlyPlayedResponse = await fetch(RECENTLY_PLAYED_ENDPOINT, {
       headers: {
         Authorization: `Bearer ${access_token}`,
       },
+      cache: 'no-store', // Ensure we don't use browser cache
     });
 
     if (recentlyPlayedResponse.status === 200) {
@@ -72,8 +119,8 @@ export async function GET() {
       if (items && items.length > 0) {
         const song = items[0].track;
         
-        return NextResponse.json({
-          isPlaying: false,
+        // Cache the recently played track
+        recentlyPlayedCache = {
           track: {
             album: {
               name: song.album.name,
@@ -84,12 +131,20 @@ export async function GET() {
             external_urls: song.external_urls,
             id: song.id,
           },
-        });
+          timestamp: now,
+        };
+        
+        console.log('Recently played track found');
+        return NextResponse.json({
+          isPlaying: false,
+          track: recentlyPlayedCache.track,
+        }, { headers });
       }
     }
 
     // Nothing found
-    return NextResponse.json({ isPlaying: false, track: null });
+    console.log('No track found');
+    return NextResponse.json({ isPlaying: false, track: null }, { headers });
   } catch (error) {
     console.error('Error in Spotify API:', error);
     return NextResponse.json(
