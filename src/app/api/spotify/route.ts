@@ -97,7 +97,9 @@ export async function GET() {
       }, { headers });
     }
 
-    // Try to get currently playing track 
+    // Skip "currently playing" since we don't have permissions
+    // Just keep this as a comment in case permissions are added later
+    /*
     console.log('Fetching currently playing track');
     try {
       const nowPlayingResponse = await fetch(NOW_PLAYING_ENDPOINT, {
@@ -107,11 +109,9 @@ export async function GET() {
         cache: 'no-store',
       });
 
-      // If currently playing exists and is valid (status 200), return it
       if (nowPlayingResponse.status === 200) {
         const song = await nowPlayingResponse.json();
         
-        // Only return if actually playing (could be paused)
         if (song.is_playing && song.item) {
           console.log('Currently playing track found');
           
@@ -126,7 +126,6 @@ export async function GET() {
             id: song.item.id,
           };
           
-          // Update currently playing cache
           trackCache.currentlyPlaying = currentTrack;
           trackCache.currentlyPlayingTimestamp = now;
           
@@ -138,10 +137,12 @@ export async function GET() {
       }
     } catch (error) {
       console.error('Error fetching currently playing:', error);
-      // Continue to recently played if there's an error
     }
+    */
 
-    // Check for recently played cache (valid for 2 minutes)
+    // Temporarily disable cache for recently played tracks to debug
+    // We want to fetch fresh data every time during development
+    /*
     if (trackCache.recentlyPlayed && now - trackCache.timestamp < 120000) {
       console.log('Using cached recently played track');
       return NextResponse.json({
@@ -149,6 +150,7 @@ export async function GET() {
         track: trackCache.recentlyPlayed,
       }, { headers });
     }
+    */
 
     // If nothing playing, fallback to recently played
     console.log('Fetching recently played tracks');
