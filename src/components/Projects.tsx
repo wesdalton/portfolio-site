@@ -44,6 +44,13 @@ export default function Projects() {
       technologies: ['Python', 'API Integration', 'CLI Design', 'Real-time Monitoring']
     },
     {
+      title: 'Portfolio Website',
+      description: 'Designed and developed this responsive portfolio website showcasing my projects and experience. Features include Spotify integration, 3D animations, and a clean, modern design.',
+      technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Spotify API'],
+      link: 'https://wesleydalton.com',
+      github: 'https://github.com/makeAticket/portfolio-site'
+    },
+    {
       title: 'Documentary Film Project',
       description: 'Produced "Dreaming of Jerusalem," a documentary film about Ethiopian Jews that premiered on Discovery+, handling audio, video, aerial, and post-production aspects.',
       technologies: ['Video Production', 'Audio Engineering', 'Post-production', 'Project Management'],
@@ -58,11 +65,6 @@ export default function Projects() {
       title: 'COVID Resource Finder',
       description: 'Built a platform providing free monitoring services for COVID-related resources, including vaccine and at-home test availability trackers to help communities during the pandemic.',
       technologies: ['Web Development', 'Data Aggregation', 'Public Health', 'Real-time Updates']
-    },
-    {
-      title: 'Investment Analysis Dashboard',
-      description: 'Created an analytical dashboard for evaluating startup investment opportunities, featuring market trend analysis, comparative metrics, and financial projections.',
-      technologies: ['Financial Modeling', 'Data Visualization', 'Market Analysis', 'JavaScript']
     },
     {
       title: 'Custom LLM Application',
