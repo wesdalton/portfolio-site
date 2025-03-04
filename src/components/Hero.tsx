@@ -4,11 +4,12 @@ import HeroAnimation from './HeroAnimation';
 import { FiArrowDown } from 'react-icons/fi';
 import NowPlaying from './NowPlaying';
 
+// Phrases with specially colored periods
 const typewriterPhrases = [
-  "innovative solutions.",
-  "AI-driven experiences.",
-  "data-powered products.",
-  "impactful technology.",
+  "innovative solutions",
+  "AI-driven experiences",
+  "data-powered products",
+  "impactful technology",
 ];
 
 export default function Hero() {
@@ -105,10 +106,13 @@ export default function Hero() {
             >
               <span>I build</span>
               
-              <span 
-                className="text-secondary inline-block relative after:content-[''] after:absolute after:right-0 after:top-0 after:h-full after:w-[2px] after:bg-secondary after:animate-[blink_0.85s_infinite]"
-              >
-                {displayText}<span className="text-textPrimary">.</span>
+              <span className="flex items-baseline">
+                <span 
+                  className="text-secondary inline-block relative after:content-[''] after:absolute after:right-0 after:top-0 after:h-full after:w-[2px] after:bg-secondary after:animate-[blink_0.85s_infinite]"
+                >
+                  {displayText}
+                </span>
+                <span className="text-textPrimary">.</span>
               </span>
             </motion.h2>
           </div>
