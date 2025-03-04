@@ -106,7 +106,13 @@ export default function NowPlaying() {
             <FaSpotify size={20} className="text-spotify mr-2" />
             <p className="text-sm font-mono text-textPrimary flex items-center">
               {loading ? 'Connecting to Spotify...' :
-               error ? 'Error connecting' : (
+               error ? 'Error connecting' :
+               isPlaying ? (
+                <>
+                  Now Playing
+                  <span className="ml-2 h-2 w-2 rounded-full bg-[#1DB954] inline-block animate-pulse-slow shadow-[0_0_8px_#1DB954] border border-[#1DB954]/30"></span>
+                </>
+               ) : (
                 <>
                   Recently Played
                   <span className="ml-2 h-2 w-2 rounded-full bg-[#F9D342] inline-block shadow-[0_0_8px_#F9D342] border border-[#F9D342]/30"></span>

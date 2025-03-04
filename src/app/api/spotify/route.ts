@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 // These would normally be environment variables
 const client_id = '2ce689cb08f641d0b0dfeb4865135662';
 const client_secret = '612ef6115f2b4544bb9c69d755ebf4da';
-const refresh_token = 'AQDPgj-B8bwKMC6Jm3Io9Eb0m5912lKFdheRU3FtwCZVjFDvDnCQomApX9mJHJEtJQ6AKg7q-QNOa1uzrzQlioTUatq36S-o7NpCkGqFDM70E7qRn3h7HElftSUdN3JTG3U';
+const refresh_token = 'AQCH_9MjYQNgGOIgSd0_-uItYQI0Bs1c6ZIAs7D73FTQUdnulCLPl_1Pu_GIFymmuqs91GmooeFe1oYnTVVAxOL3enqrNMvAIFmcscEm6Ma4MneRykeTUkv-UVozBB2iAOY';
 
 const basic = Buffer.from(`${client_id}:${client_secret}`).toString('base64');
 const NOW_PLAYING_ENDPOINT = `https://api.spotify.com/v1/me/player/currently-playing`;
@@ -97,9 +97,7 @@ export async function GET() {
       }, { headers });
     }
 
-    // Skip "currently playing" since we don't have permissions
-    // Just keep this as a comment in case permissions are added later
-    /*
+    // Now we have permissions for currently playing!
     console.log('Fetching currently playing track');
     try {
       const nowPlayingResponse = await fetch(NOW_PLAYING_ENDPOINT, {
@@ -134,11 +132,17 @@ export async function GET() {
             track: currentTrack,
           }, { headers });
         }
+      } else {
+        console.log(`Currently playing status: ${nowPlayingResponse.status}`);
+        if (nowPlayingResponse.status !== 204) {
+          // Only log errors for non-204 responses (204 means no content, which is expected when nothing is playing)
+          const errorText = await nowPlayingResponse.text();
+          console.log('Error response:', errorText);
+        }
       }
     } catch (error) {
       console.error('Error fetching currently playing:', error);
     }
-    */
 
     // Temporarily disable cache for recently played tracks to debug
     // We want to fetch fresh data every time during development
