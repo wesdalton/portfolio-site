@@ -91,10 +91,15 @@ export default function NowPlaying() {
     }
   }, [isLoading]);
 
-  // Get track info from data or fallback
+  // Get track info from data or fallback - ensure it's never null
   const track = data?.track || fallbackData.track;
   const isPlaying = data?.isPlaying || false;
   const loading = isLoading && !showFallback;
+  
+  // TypeScript safety - this should never happen due to fallback but helps the compiler
+  if (!track) {
+    return null;
+  }
 
     return (
       <motion.div
@@ -131,15 +136,15 @@ export default function NowPlaying() {
             </div>
           ) : (
             <a 
-              href={track.external_urls.spotify}
+              href={track?.external_urls?.spotify || '#'}
               target="_blank"
               rel="noopener noreferrer"
               className="flex space-x-3 items-center hover-lift"
             >
               <div className="h-12 w-12 rounded-md shadow-md overflow-hidden relative">
                 <img 
-                  src={track.album.images[0].url} 
-                  alt={`${track.album.name} cover`}
+                  src={track?.album?.images?.[0]?.url || '/images/headshot.jpeg'} 
+                  alt={`${track?.album?.name || 'Album'} cover`}
                   className="h-full w-full object-cover"
                   width={48}
                   height={48}
@@ -147,10 +152,10 @@ export default function NowPlaying() {
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-sm text-textPrimary font-medium truncate">
-                  {track.name}
+                  {track?.name || 'Unknown Track'}
                 </p>
                 <p className="text-xs text-textSecondary truncate">
-                  {track.artists.map(artist => artist.name).join(', ')}
+                  {track?.artists?.map(artist => artist.name).join(', ') || 'Unknown Artist'}
                 </p>
               </div>
             </a>
