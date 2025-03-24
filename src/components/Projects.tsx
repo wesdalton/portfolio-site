@@ -22,10 +22,11 @@ export default function Projects() {
       imageSrc: '/images/prognos_project.png'
     },
     {
-      title: 'FLORA Real-time AI Streaming Landing Page',
-      description: 'Assisted in development of a dynamic landing page featuring real-time AI content streaming and interactive elements for the beta launch of FLORA\'s platform, showcasing cutting-edge web technology and design.',
-      technologies: ['React', 'Node.js', 'WebSockets', 'AI Integration'],
+      title: 'Respire: Burnout Prediction Platform',
+      description: 'Developed a sophisticated web application that predicts and prevents burnout by analyzing WHOOP health data with self-reported mood ratings. Leveraged advanced AI models to provide personalized insights and actionable recommendations based on unique health patterns and biometrics.',
+      technologies: ['Python', 'Flask', 'OpenAI API', 'Supabase', 'Data Visualization'],
       featured: true,
+      github: 'https://github.com/wesdalton/burnout-predictor',
       imageSrc: '/images/flora_project.png'
     },
     {
@@ -156,8 +157,8 @@ export default function Projects() {
                           width={280}
                           height={140}
                           style={{ 
-                            objectFit: project.title.includes("FLORA") ? "contain" : "cover",
-                            backgroundColor: project.title.includes("FLORA") ? "#111827" : "transparent",
+                            objectFit: project.title.includes("Respire") ? "contain" : "cover",
+                            backgroundColor: project.title.includes("Respire") ? "#111827" : "transparent",
                             maxWidth: "100%",
                             maxHeight: "100%"
                           }}
