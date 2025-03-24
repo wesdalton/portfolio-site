@@ -48,7 +48,7 @@ export default function Projects() {
       description: 'Designed and developed this responsive portfolio website showcasing my projects and experience. Features include Spotify integration, 3D animations, and a clean, modern design.',
       technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Spotify API'],
       link: 'https://wesleydalton.com',
-      github: 'https://github.com/makeAticket/portfolio-site'
+      github: 'https://github.com/wesdalton/portfolio-site'
     },
     {
       title: 'Documentary Film Project',
