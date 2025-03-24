@@ -27,7 +27,7 @@ export default function Projects() {
       technologies: ['Python', 'Flask', 'OpenAI API', 'Supabase', 'Data Visualization'],
       featured: true,
       github: 'https://github.com/wesdalton/burnout-predictor',
-      imageSrc: '/images/flora_project.png'
+      imageSrc: '/images/respire_project.png'
     },
     {
       title: 'Synthetic Data Generation System',
