@@ -206,12 +206,12 @@ export async function GET() {
     const fallbackTrack: SpotifyTrack = {
       album: {
         name: "Blonde",
-        images: [{ url: "https://i.scdn.co/image/ab67616d0000b2737004048e5dc4b8cf798d168b" }]
+        images: [{ url: "https://media.pitchfork.com/photos/5929f619c0084474cd0c5a44/master/pass/27e0e270.jpg" }]
       },
       artists: [{ name: "Frank Ocean" }],
       name: "Ivy",
       external_urls: {
-        spotify: "https://open.spotify.com/track/2ZWlPOoWh0626oTaHrnl2a"
+        spotify: "https://open.spotify.com/track/2ZWlPOoWh0626oTaHrnl2a?si=39ae4c51d2ec4678"
       },
       id: "2ZWlPOoWh0626oTaHrnl2a"
     };
