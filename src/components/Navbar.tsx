@@ -68,7 +68,7 @@ export default function Navbar() {
               transition={{ duration: 0.3, delay: 0.5 }}
             >
               <a
-                href="/Wesley_Dalton_Resume.pdf"
+                href="https://drive.google.com/file/d/1qOQ7VHSgNberDKJLCQIjW6VbksGKJ2pMvHnHG0VNkjw/preview"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="button-primary ml-4"
@@ -132,7 +132,7 @@ export default function Navbar() {
               className="pt-4"
             >
               <a
-                href="/Wesley_Dalton_Resume.pdf"
+                href="https://drive.google.com/file/d/1qOQ7VHSgNberDKJLCQIjW6VbksGKJ2pMvHnHG0VNkjw/preview"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="button-primary"
