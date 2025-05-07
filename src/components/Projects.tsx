@@ -52,7 +52,8 @@ export default function Projects() {
     {
       title: 'CLI Monitoring Tool',
       description: 'Developed a command-line interface tool for monitoring product releases and inventory changes across multiple retailers, using reverse engineering techniques to access public endpoints.',
-      technologies: ['Python', 'API Integration', 'CLI Design', 'Real-time Monitoring']
+      technologies: ['Python', 'API Integration', 'CLI Design', 'Real-time Monitoring'],
+      github: 'https://github.com/wesdalton/gamma'
     },
     {
       title: 'Portfolio Website',
