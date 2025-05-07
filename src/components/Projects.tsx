@@ -15,6 +15,16 @@ type Project = {
 export default function Projects() {
   const featuredProjects: Project[] = [
     {
+      title: 'News Source Headline Classifier',
+      description: 'Developed a machine learning model that distinguishes between Fox News and NBC headlines with 78% accuracy. Combined TF-IDF, character n-grams, and deep learning techniques to identify subtle stylistic patterns that characterize different news sources.',
+      technologies: ['Python', 'PyTorch', 'XGBoost', 'NLP', 'TF-IDF'],
+      featured: true,
+      link: '/CIS_5190_Final_Report.pdf',
+      // Add your GitHub repository link when available
+      // github: 'https://github.com/wesdalton/headline-classifier',
+      imageSrc: '/images/headline_classifier.png'
+    },
+    {
       title: 'AI-Driven Predictive Analytics Pipeline',
       description: 'Led the development of an AI system for Prognos Health that optimizes CRM workflows by automating lead qualification, outreach, and sales intelligence, significantly reducing manual effort and accelerating the sales cycle.',
       technologies: ['Python', 'PyTorch', 'Machine Learning', 'CRM Integration'],
