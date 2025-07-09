@@ -3,8 +3,8 @@ import Image from 'next/image';
 
 export default function About() {
   const skills = [
-    'Python', 'React', 'Node.js', 'Java', 'OCaml',
-    'PyTorch', 'SQL', 'Docker', 'Git', 'AI/ML'
+    'Python', 'JavaScript/TypeScript', 'React', 'Next.js', 'Node.js', 'Java', 'OCaml',
+    'PyTorch', 'Vertex AI', 'AWS', 'GCP', 'Docker', 'Terraform', 'Git', 'SQL', 'Postgres', 'Pinecone'
   ];
 
   return (
@@ -29,9 +29,9 @@ export default function About() {
             transition={{ duration: 0.5, delay: 0.1 }}
           >
             <p className="text-textSecondary mb-4">
-              Hello! I'm Wesley, a Computer Science and History double major at the University of Pennsylvania. 
-              My academic journey combines technical expertise with critical thinking from the humanities, 
-              giving me a unique perspective on technology's role in society.
+              Hello! I'm Wesley, a Computer Science major with a minor in Engineering Entrepreneurship at the University of Pennsylvania. 
+              I'm currently pursuing an accelerated M.S.E. in Computer & Information Science, combining technical expertise with entrepreneurial thinking 
+              to create innovative solutions that deliver real-world impact.
             </p>
             
             <p className="text-textSecondary mb-4">

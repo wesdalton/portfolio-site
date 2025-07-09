@@ -15,6 +15,14 @@ type Project = {
 export default function Projects() {
   const featuredProjects: Project[] = [
     {
+      title: 'Respire: Burnout Prediction Platform',
+      description: 'Engineered a flexible data fusion pipeline combining disparate health datasets into a proprietary algorithm that analyzes temporal trends across multiple indicators, detecting burnout risk patterns up to 7 days before conventional warning signs appear. Implemented full-stack web application using Python/Flask, Supabase, RESTful APIs, and Plotly visualizations in a Bootstrap UI.',
+      technologies: ['Python', 'Flask', 'Supabase', 'RESTful APIs', 'Plotly', 'Bootstrap', 'Data Fusion'],
+      featured: true,
+      github: 'https://github.com/wesdalton/burnout-predictor',
+      imageSrc: '/images/respire_project.png'
+    },
+    {
       title: 'News Source Headline Classifier',
       description: 'Developed a machine learning model that distinguishes between Fox News and NBC headlines with 78% accuracy. Combined TF-IDF, character n-grams, and deep learning techniques to identify subtle stylistic patterns that characterize different news sources.',
       technologies: ['Python', 'PyTorch', 'XGBoost', 'NLP', 'TF-IDF'],
@@ -30,14 +38,6 @@ export default function Projects() {
       technologies: ['Python', 'PyTorch', 'Machine Learning', 'CRM Integration'],
       featured: true,
       imageSrc: '/images/prognos_project.png'
-    },
-    {
-      title: 'Respire: Burnout Prediction Platform',
-      description: 'Developed a sophisticated web application that predicts and prevents burnout by analyzing WHOOP health data with self-reported mood ratings. Leveraged advanced AI models to provide personalized insights and actionable recommendations based on unique health patterns and biometrics.',
-      technologies: ['Python', 'Flask', 'OpenAI API', 'Supabase', 'Data Visualization'],
-      featured: true,
-      github: 'https://github.com/wesdalton/burnout-predictor',
-      imageSrc: '/images/respire_project.png'
     },
     {
       title: 'Synthetic Data Generation System',
@@ -90,6 +90,7 @@ export default function Projects() {
       <div className="container mx-auto px-4 md:px-6">
         <motion.h2 
           className="section-heading"
+          style={{ counterSet: 'section 1' }}
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}

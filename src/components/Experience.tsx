@@ -13,28 +13,40 @@ type ExperienceItem = {
 export default function Experience() {
   const experiences: ExperienceItem[] = [
     {
+      company: 'TRAK',
+      title: 'Full Stack & ML Engineering Intern',
+      date: 'May 2025 - Present',
+      location: 'New York, NY',
+      description: [
+        'Contributed to multi-tenancy support, CCC & QuickBooks integrations, and the ongoing migration of core services to GCP (Cloud SQL, BigQuery); additionally maintained Terraform infrastructure-as-code, Docker images, and GitHub Actions pipelines.',
+        'Led the "Calibration Mapping" initiative: scraped and OCR-processed over 10,000 OEM manuals and repair estimates, built an ETL pipeline into Postgres and Pinecone, and trained BERT-style models that predict required ADAS calibrations with 93% F1.',
+        'Designed and launched a marketing site (Next.js, Tailwind, Vercel, Supabase) from blank repo, with Largest Contentful Paint of 0.6s'
+      ],
+      skills: ['Next.js', 'GCP', 'BigQuery', 'Terraform', 'Docker', 'BERT', 'ETL', 'Postgres', 'Pinecone', 'OCR']
+    },
+    {
       company: 'FLORA',
       title: 'Software Engineering Intern',
       date: 'Jun 2024 - Aug 2024',
       location: 'New York, NY',
       description: [
-        'Implemented features, pushed bug fixes, interviewed designers for user feedback, and discussed internal development infrastructure.',
-        'Assisted in go-to-market strategy for beta launch, including a realtime AI streaming landing page and sculpture gallery launch event.'
+        'Developed and integrated key features on Flora\'s AI-powered infinite canvas by leveraging advanced generative models and real-time data processing, streamlining creative workflows using React Flow, Fal AI, among other full stack technologies.',
+        'Collaborated on executing a high-impact go-to-market strategy for Flora by designing a real-time AI streaming landing page and coordinating a promotional sculpture gallery event, which drove a 20% uptick in early user engagement and expanded market reach.'
       ],
-      skills: ['React', 'AI', 'Product Development', 'User Experience']
+      skills: ['React', 'AI', 'Product Development', 'User Experience', 'React Flow', 'Fal AI']
     },
     {
       company: 'AI Business Club at Penn (AIBC)',
-      title: 'Project Leader',
+      title: 'Project Lead / Data Scientist',
       date: 'Aug 2024 - Present',
       location: 'Philadelphia, PA',
       description: [
-        'Led a team of 10 Computer Science and Finance students to develop an AI-driven predictive analytics pipeline for Prognos Health, optimizing CRM workflows by automating lead qualification, outreach, and sales intelligence.',
-        'Enhanced targeting of pharmaceutical buyers, reducing manual effort and accelerating the sales cycle increasing productivity.',
+        'Automated CRM lead-scoring workflow for Prognos Health by scraping Trello activity data, merging with client KPIs, and training an XGBoost model deployed as a production-ready API, resulting in a 15% improvement in forecasted sales conversion rates.',
+        'Won McKinsey-style data-ops case simulation as team data scientist; built end-to-end ETL → model → dashboard in 48 hours.',
         'Consult with various companies looking to enhance workflows or product features by integrating AI solutions.',
         'Research and implement advanced AI technologies such as RAG, fine-tuning LLMs, and creating custom AI-driven applications.'
       ],
-      skills: ['AI/ML', 'Project Management', 'LLMs', 'RAG', 'Team Leadership']
+      skills: ['AI/ML', 'XGBoost', 'ETL', 'API Development', 'Data Science', 'Team Leadership']
     },
     {
       company: 'Menlo Ventures',
@@ -48,15 +60,15 @@ export default function Experience() {
       skills: ['Market Analysis', 'Investment Research', 'Financial Modeling', 'Startup Evaluation']
     },
     {
-      company: 'DiversaTech Penn',
-      title: 'Engineering Consultant',
-      date: 'Aug 2024 - Present',
+      company: 'Civic',
+      title: 'Machine-Learning Engineer (Consultant)',
+      date: 'Sep 2024 - Dec 2024',
       location: 'Philadelphia, PA',
       description: [
-        'Designed and implemented a system for generating high-quality synthetic data to train AI models for a civic engagement platform.',
-        'Collaborated with experts to overcome data quality and model accuracy challenges, creating a robust and scalable solution.'
+        'Designed a multi-stage LLM profile-generation pipeline to synthesize training data for congressional inbox ingest models.',
+        'Prototyped topic-classification and sentiment modules (SpaCy, SBERT, scikit-learn) that now anchor the platform\'s beta.'
       ],
-      skills: ['Data Engineering', 'Synthetic Data Generation', 'AI/ML', 'Consulting']
+      skills: ['LLM', 'Data Pipeline', 'SpaCy', 'SBERT', 'scikit-learn', 'NLP']
     },
     {
       company: 'Gamma Technologies',
