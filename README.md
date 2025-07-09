@@ -1,7 +1,5 @@
 # Wesley Dalton Portfolio
 
-https://wesleydalton.com
-
 A modern portfolio website built with Next.js, React, Tailwind CSS, and Framer Motion.
 
 ## Features
