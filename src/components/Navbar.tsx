@@ -10,14 +10,15 @@ const navLinks = [
   { name: 'Contact', href: '#contact', counter: '04' },
 ];
 
+const RESUME_URL =
+  'https://drive.google.com/file/d/1qOQ7VHSgNberDKJLCQIjW6VbksGKJ2pMvHnHG0VNkjw/preview';
+
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
-    };
+    const handleScroll = () => setIsScrolled(window.scrollY > 10);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -26,18 +27,18 @@ export default function Navbar() {
     <header
       className={`fixed top-0 z-50 w-full transition-all duration-300 ${
         isScrolled
-          ? 'bg-primary/90 backdrop-blur-sm py-3 shadow-md'
-          : 'bg-transparent py-5'
+          ? 'border-b border-line/70 bg-primary/70 py-3 backdrop-blur-xl'
+          : 'border-b border-transparent bg-transparent py-5'
       }`}
     >
-      <div className="container mx-auto px-4 md:px-6 flex justify-between items-center">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-        >
-          <Link href="/" className="text-secondary font-bold text-2xl">
-            WD
+      <div className="section-shell flex items-center justify-between">
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
+          <Link
+            href="/"
+            aria-label="Home"
+            className="group flex h-10 w-10 items-center justify-center rounded-xl border border-line bg-surface/60 font-mono text-sm font-bold text-secondary transition-colors hover:border-secondary/50"
+          >
+            <span className="transition-transform duration-300 group-hover:scale-110">WD</span>
           </Link>
         </motion.div>
 
@@ -48,11 +49,11 @@ export default function Navbar() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.1 }}
         >
-          <ul className="flex space-x-1">
+          <ul className="flex items-center gap-1">
             {navLinks.map((link, i) => (
               <motion.li
                 key={link.name}
-                initial={{ opacity: 0, y: -20 }}
+                initial={{ opacity: 0, y: -16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: 0.1 * i }}
               >
@@ -63,17 +64,13 @@ export default function Navbar() {
               </motion.li>
             ))}
             <motion.li
-              initial={{ opacity: 0, y: -20 }}
+              initial={{ opacity: 0, y: -16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: 0.5 }}
+              className="ml-3"
             >
-              <a
-                href="https://drive.google.com/file/d/1qOQ7VHSgNberDKJLCQIjW6VbksGKJ2pMvHnHG0VNkjw/preview"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="button-primary ml-4"
-              >
-                Resume
+              <a href={RESUME_URL} target="_blank" rel="noopener noreferrer" className="button-ghost px-5 py-2 text-xs">
+                Résumé
               </a>
             </motion.li>
           </ul>
@@ -83,21 +80,18 @@ export default function Navbar() {
         <div className="md:hidden">
           <button
             type="button"
-            className="text-textPrimary hover:text-secondary"
+            aria-label="Toggle menu"
+            className="flex h-10 w-10 items-center justify-center rounded-xl border border-line bg-surface/60 text-textPrimary transition-colors hover:text-secondary"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
-            {mobileMenuOpen ? (
-              <FiX className="h-6 w-6" />
-            ) : (
-              <FiMenu className="h-6 w-6" />
-            )}
+            {mobileMenuOpen ? <FiX className="h-5 w-5" /> : <FiMenu className="h-5 w-5" />}
           </button>
         </div>
       </div>
 
       {/* Mobile Menu */}
       <motion.div
-        className={`fixed inset-0 bg-primary/95 z-40 md:hidden ${
+        className={`fixed inset-0 z-40 bg-primary/95 backdrop-blur-xl md:hidden ${
           mobileMenuOpen ? 'flex' : 'hidden'
         } items-center justify-center`}
         initial={{ opacity: 0 }}
@@ -118,9 +112,7 @@ export default function Navbar() {
                   className="text-2xl font-semibold text-textPrimary hover:text-secondary"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  <div className="text-secondary font-mono text-sm mb-1">
-                    {link.counter}.
-                  </div>
+                  <div className="mb-1 font-mono text-sm text-secondary">{link.counter}.</div>
                   {link.name}
                 </Link>
               </motion.li>
@@ -132,12 +124,13 @@ export default function Navbar() {
               className="pt-4"
             >
               <a
-                href="https://drive.google.com/file/d/1qOQ7VHSgNberDKJLCQIjW6VbksGKJ2pMvHnHG0VNkjw/preview"
+                href={RESUME_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="button-primary"
+                onClick={() => setMobileMenuOpen(false)}
               >
-                Resume
+                Résumé
               </a>
             </motion.li>
           </ul>

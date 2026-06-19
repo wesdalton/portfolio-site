@@ -1,254 +1,189 @@
 import { motion } from 'framer-motion';
-import { FiExternalLink, FiGithub, FiFolder } from 'react-icons/fi';
+import { FiExternalLink, FiGithub, FiFolder, FiArrowUpRight } from 'react-icons/fi';
 import Image from 'next/image';
 
 type Project = {
   title: string;
+  blurb: string;
   description: string;
   technologies: string[];
   link?: string;
+  linkLabel?: string;
   github?: string;
-  featured?: boolean;
   imageSrc?: string;
+  accent?: string; // gradient fallback when no image
+};
+
+const featuredProjects: Project[] = [
+  {
+    title: 'Respire',
+    blurb: 'Burnout prevention, 7 days early',
+    description:
+      'A full-stack wellness app that fuses WHOOP biometrics — HRV, sleep, and strain — into a multi-signal ML model, flagging burnout risk roughly a week before clinical benchmarks.',
+    technologies: ['Flask', 'Supabase', 'ML', 'WHOOP API', 'Plotly'],
+    link: 'https://try.respire.cloud',
+    linkLabel: 'Live',
+    imageSrc: '/images/respire_project.png',
+  },
+  {
+    title: 'InstaLite',
+    blurb: 'A social network that scales',
+    description:
+      'A production-grade social platform with PageRank feed ranking (Spark), facial recognition (TensorFlow), and real-time chat (Kafka) — scaled to 10,000+ concurrent users on AWS at sub-second latency.',
+    technologies: ['Node.js', 'Spark', 'TensorFlow', 'Kafka', 'AWS', 'DynamoDB'],
+    accent: 'from-secondary/30 to-accent/20',
+  },
+];
+
+const otherProjects: Project[] = [
+  {
+    title: 'Headline Classifier',
+    blurb: 'Applied ML · CIS 5190',
+    description:
+      'An NLP model classifying news headlines by topic and source, with a full experimental writeup from Penn’s Applied Machine Learning course.',
+    technologies: ['PyTorch', 'NLP', 'scikit-learn'],
+    link: '/headline-classifier',
+    linkLabel: 'Report',
+  },
+  {
+    title: 'This Website',
+    blurb: 'Designed & built from scratch',
+    description:
+      'A dark, motion-driven portfolio built with Next.js and Framer Motion, with a live Spotify now-playing integration and an interactive canvas grid.',
+    technologies: ['Next.js', 'TypeScript', 'Tailwind', 'Canvas'],
+    link: 'https://wesleydalton.com',
+    linkLabel: 'Live',
+    github: 'https://github.com/wesdalton/portfolio-site',
+  },
+];
+
+const fade = {
+  initial: { opacity: 0, y: 24 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: '-80px' },
 };
 
 export default function Projects() {
-  const featuredProjects: Project[] = [
-    {
-      title: 'Respire: Burnout Prediction Platform',
-      description: 'Engineered a flexible data fusion pipeline combining disparate health datasets into a proprietary algorithm that analyzes temporal trends across multiple indicators, detecting burnout risk patterns up to 7 days before conventional warning signs appear. Implemented full-stack web application using Python/Flask, Supabase, RESTful APIs, and Plotly visualizations in a Bootstrap UI.',
-      technologies: ['Python', 'Flask', 'Supabase', 'RESTful APIs', 'Plotly', 'Bootstrap', 'Data Fusion'],
-      featured: true,
-      github: 'https://github.com/wesdalton/burnout-predictor',
-      imageSrc: '/images/respire_project.png'
-    },
-    {
-      title: 'News Source Headline Classifier',
-      description: 'Developed a machine learning model that distinguishes between Fox News and NBC headlines with 78% accuracy. Combined TF-IDF, character n-grams, and deep learning techniques to identify subtle stylistic patterns that characterize different news sources.',
-      technologies: ['Python', 'PyTorch', 'XGBoost', 'NLP', 'TF-IDF'],
-      featured: true,
-      link: '/CIS_5190_Final_Report.pdf',
-      // Add your GitHub repository link when available
-      // github: 'https://github.com/wesdalton/headline-classifier',
-      imageSrc: '/images/headline_classifier.png'
-    },
-    {
-      title: 'AI-Driven Predictive Analytics Pipeline',
-      description: 'Led the development of an AI system for Prognos Health that optimizes CRM workflows by automating lead qualification, outreach, and sales intelligence, significantly reducing manual effort and accelerating the sales cycle.',
-      technologies: ['Python', 'PyTorch', 'Machine Learning', 'CRM Integration'],
-      featured: true,
-      imageSrc: '/images/prognos_project.png'
-    },
-    {
-      title: 'Synthetic Data Generation System',
-      description: 'Designed and implemented a robust system to generate high-quality synthetic data for training AI models used in a civic engagement platform, overcoming challenges related to data quality and model accuracy.',
-      technologies: ['Python', 'GANs', 'Data Engineering', 'Statistical Analysis'],
-      featured: true,
-      imageSrc: '/images/civic_project.png'
-    },
-  ];
-
-  const otherProjects: Project[] = [
-    {
-      title: 'CLI Monitoring Tool',
-      description: 'Developed a command-line interface tool for monitoring product releases and inventory changes across multiple retailers, using reverse engineering techniques to access public endpoints.',
-      technologies: ['Python', 'API Integration', 'CLI Design', 'Real-time Monitoring'],
-      github: 'https://github.com/wesdalton/gamma'
-    },
-    {
-      title: 'Portfolio Website',
-      description: 'Designed and developed this responsive portfolio website showcasing my projects and experience. Features include Spotify integration, 3D animations, and a clean, modern design.',
-      technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Spotify API'],
-      link: 'https://wesleydalton.com',
-      github: 'https://github.com/wesdalton/portfolio-site'
-    },
-    {
-      title: 'Documentary Film Project',
-      description: 'Produced "Dreaming of Jerusalem," a documentary film about Ethiopian Jews that premiered on Discovery+, handling audio, video, aerial, and post-production aspects.',
-      technologies: ['Video Production', 'Audio Engineering', 'Post-production', 'Project Management'],
-      link: 'https://www.discovery.com/'
-    },
-    {
-      title: 'Blockchain Tech Minicourse',
-      description: 'Founded and developed curriculum for a comprehensive blockchain technology minicourse, teaching fundamental concepts and practical applications to high school students.',
-      technologies: ['Blockchain', 'Educational Content', 'Smart Contracts', 'Cryptography']
-    },
-    {
-      title: 'COVID Resource Finder',
-      description: 'Built a platform providing free monitoring services for COVID-related resources, including vaccine and at-home test availability trackers to help communities during the pandemic.',
-      technologies: ['Web Development', 'Data Aggregation', 'Public Health', 'Real-time Updates']
-    },
-    {
-      title: 'Custom LLM Application',
-      description: 'Developed a specialized application leveraging large language models with retrieval augmented generation (RAG) for domain-specific knowledge processing and insights.',
-      technologies: ['NLP', 'RAG', 'LLMs', 'Python']
-    }
-  ];
-
   return (
-    <section id="projects" className="py-20">
-      <div className="container mx-auto px-4 md:px-6">
-        <motion.h2 
-          className="section-heading"
-          style={{ counterSet: 'section 1' }}
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-        >
-          Some Things I've Built
-        </motion.h2>
+    <section id="projects" className="scroll-mt-24 py-24">
+      <div className="section-shell">
+        <motion.div {...fade} transition={{ duration: 0.5 }}>
+          <p className="eyebrow">
+            <span className="text-textSecondary">03</span> / Projects
+          </p>
+          <h2 className="section-heading">Things I&apos;ve built</h2>
+        </motion.div>
 
-        {/* Featured Projects */}
-        <div className="space-y-12 mb-16">
+        {/* Featured */}
+        <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
           {featuredProjects.map((project, index) => (
             <motion.div
-              key={index}
-              className="grid grid-cols-12 gap-4 md:gap-6 relative mb-12"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
+              key={project.title}
+              {...fade}
+              transition={{ duration: 0.5, delay: index * 0.08 }}
+              className="card-interactive group flex flex-col overflow-hidden"
             >
-              {/* Project Content */}
-              <div className="col-span-12 md:col-span-7 z-10 order-2 md:order-1">
-                <p className="text-secondary font-mono text-sm mb-1">Featured Project</p>
-                <h3 className="text-xl md:text-2xl font-bold text-textPrimary mb-3">{project.title}</h3>
-                
-                <div className="p-4 rounded-lg bg-tertiary text-textSecondary shadow-md mb-3">
-                  <p className="text-sm md:text-base">{project.description}</p>
-                </div>
-                
-                <ul className="flex flex-wrap text-xs md:text-sm font-mono mb-3">
-                  {project.technologies.map((tech) => (
-                    <li key={tech} className="mb-1 mr-3 text-textSecondary">
-                      {tech}
-                    </li>
-                  ))}
-                </ul>
-                
-                <div className="flex text-textPrimary">
-                  {project.github && (
-                    <a 
-                      href={project.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mr-4 hover:text-secondary transition-colors"
-                      aria-label="GitHub Repository"
-                    >
-                      <FiGithub size={20} />
-                    </a>
-                  )}
-                  {project.link && (
-                    <a 
-                      href={project.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="hover:text-secondary transition-colors"
-                      aria-label="External Link"
-                    >
-                      <FiExternalLink size={20} />
-                    </a>
-                  )}
-                </div>
+              {/* Visual */}
+              <div className="relative h-44 w-full overflow-hidden border-b border-line">
+                {project.imageSrc ? (
+                  <Image
+                    src={project.imageSrc}
+                    alt={`${project.title} preview`}
+                    fill
+                    className="object-cover opacity-90 transition-transform duration-500 group-hover:scale-105"
+                  />
+                ) : (
+                  <div
+                    className={`flex h-full w-full items-center justify-center bg-gradient-to-br ${project.accent}`}
+                  >
+                    <span className="font-mono text-4xl font-bold text-textPrimary/40">
+                      {project.title}
+                    </span>
+                  </div>
+                )}
+                <div className="absolute inset-0 bg-gradient-to-t from-surface to-transparent opacity-60" />
               </div>
 
-              {/* Project Image - Side by side with content on desktop */}
-              <div className="col-span-12 md:col-span-5 flex items-center justify-center order-1 md:order-2 mb-4 md:mb-0">
-                <div className="relative inline-block">
-                  {/* Green glow directly around the image */}
-                  <div className="absolute -inset-2 bg-secondary/20 rounded-xl blur-sm opacity-75 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  
-                  {/* Fixed-size image container - same for all projects */}
-                  <div className="relative bg-tertiary rounded-lg shadow-md p-4 overflow-hidden" style={{ width: 320, height: 180 }}>
-                    {project.imageSrc ? (
-                      <div className="w-full h-full flex items-center justify-center">
-                        <Image 
-                          src={project.imageSrc}
-                          alt={`${project.title} preview`}
-                          width={280}
-                          height={140}
-                          style={{ 
-                            objectFit: project.title.includes("Respire") ? "contain" : "cover",
-                            backgroundColor: project.title.includes("Respire") ? "#111827" : "transparent",
-                            maxWidth: "100%",
-                            maxHeight: "100%"
-                          }}
-                          className="transition-transform duration-300 group-hover:scale-105 rounded"
-                        />
-                      </div>
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center">
-                        <span className="text-secondary font-mono text-sm">Project Preview</span>
-                      </div>
+              <div className="flex flex-1 flex-col p-6">
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <h3 className="text-xl font-bold text-textPrimary">{project.title}</h3>
+                    <p className="font-mono text-xs text-secondary">{project.blurb}</p>
+                  </div>
+                  <div className="flex items-center gap-3 text-textSecondary">
+                    {project.github && (
+                      <a
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`${project.title} GitHub`}
+                        className="transition-colors hover:text-secondary"
+                      >
+                        <FiGithub size={18} />
+                      </a>
+                    )}
+                    {project.link && (
+                      <a
+                        href={project.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`${project.title} link`}
+                        className="transition-colors hover:text-secondary"
+                      >
+                        <FiExternalLink size={18} />
+                      </a>
                     )}
                   </div>
+                </div>
+
+                <p className="mt-4 flex-1 text-sm leading-relaxed text-textSecondary">
+                  {project.description}
+                </p>
+
+                <div className="mt-5 flex flex-wrap gap-2">
+                  {project.technologies.map((tech) => (
+                    <span key={tech} className="tech-tag">
+                      {tech}
+                    </span>
+                  ))}
                 </div>
               </div>
             </motion.div>
           ))}
         </div>
 
-        {/* Other Projects */}
-        <motion.h3 
-          className="text-2xl font-semibold text-textPrimary text-center mb-10"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-        >
-          Other Noteworthy Projects
-        </motion.h3>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {/* Additional */}
+        <div className="mt-5 grid grid-cols-1 gap-5 md:grid-cols-2">
           {otherProjects.map((project, index) => (
-            <motion.div
-              key={index}
-              className="bg-tertiary rounded-lg p-6 h-full flex flex-col hover:-translate-y-2 transition-transform duration-300"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.05 * (index % 3) }}
+            <motion.a
+              key={project.title}
+              href={project.link ?? project.github ?? '#'}
+              target={project.link?.startsWith('http') || project.github ? '_blank' : undefined}
+              rel="noopener noreferrer"
+              {...fade}
+              transition={{ duration: 0.5, delay: index * 0.08 }}
+              className="card-interactive group flex flex-col p-6"
             >
-              <div className="flex justify-between items-center mb-4">
-                <FiFolder className="text-secondary" size={36} />
-                <div className="flex space-x-4">
-                  {project.github && (
-                    <a 
-                      href={project.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-textSecondary hover:text-secondary transition-colors"
-                      aria-label="GitHub Repository"
-                    >
-                      <FiGithub size={18} />
-                    </a>
-                  )}
-                  {project.link && (
-                    <a 
-                      href={project.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-textSecondary hover:text-secondary transition-colors"
-                      aria-label="External Link"
-                    >
-                      <FiExternalLink size={18} />
-                    </a>
-                  )}
-                </div>
+              <div className="mb-4 flex items-center justify-between">
+                <FiFolder className="text-secondary" size={26} />
+                <FiArrowUpRight
+                  className="text-textSecondary transition-all duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-secondary"
+                  size={18}
+                />
               </div>
-              
-              <h4 className="text-xl font-semibold text-textPrimary mb-2">{project.title}</h4>
-              <p className="text-textSecondary mb-4 flex-grow">{project.description}</p>
-              
-              <ul className="flex flex-wrap text-xs font-mono text-textSecondary mt-auto">
+              <h4 className="text-lg font-bold text-textPrimary">{project.title}</h4>
+              <p className="font-mono text-xs text-secondary">{project.blurb}</p>
+              <p className="mt-3 flex-1 text-sm leading-relaxed text-textSecondary">
+                {project.description}
+              </p>
+              <div className="mt-5 flex flex-wrap gap-2">
                 {project.technologies.map((tech) => (
-                  <li key={tech} className="mr-3 mb-1">
+                  <span key={tech} className="tech-tag">
                     {tech}
-                  </li>
+                  </span>
                 ))}
-              </ul>
-            </motion.div>
+              </div>
+            </motion.a>
           ))}
         </div>
       </div>

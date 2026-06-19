@@ -1,75 +1,119 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Fira+Code:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 204, 214, 246;
-  --background-start-rgb: 10, 25, 47;
-  --background-end-rgb: 10, 25, 47;
+  --foreground-rgb: 232, 237, 246;
+  --background-rgb: 7, 10, 16;
+  --accent: #6ea8fe;
+  --accent-2: #9d8bff;
 }
 
 html {
   scroll-behavior: smooth;
+  background: rgb(var(--background-rgb));
 }
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background: rgb(var(--background-rgb));
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Refined selection + scrollbar */
+::selection {
+  background: rgba(110, 168, 254, 0.25);
+  color: #fff;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #070a10;
+}
+::-webkit-scrollbar-thumb {
+  background: #1c2533;
+  border-radius: 999px;
+  border: 2px solid #070a10;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #2a3650;
 }
 
 @layer components {
+  .section-shell {
+    @apply mx-auto w-full max-w-5xl px-5 sm:px-8;
+  }
+
+  /* Numbered, monospace-eyebrow section heading */
+  .eyebrow {
+    @apply mb-3 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.25em] text-secondary;
+  }
+
   .section-heading {
-    @apply flex items-center mb-10 text-2xl font-semibold text-textPrimary;
+    @apply mb-10 text-3xl font-bold tracking-tight text-textPrimary sm:text-4xl;
   }
-  
-  .section-heading::before {
-    @apply mr-2 text-secondary font-mono text-lg;
-    counter-increment: section;
-    content: "0" counter(section) ".";
-  }
-  
-  .section-heading::after {
-    @apply ml-4 w-48 h-px bg-tertiary;
-    content: "";
-  }
-  
+
   .nav-link {
-    @apply px-4 py-2 text-sm text-textSecondary hover:text-secondary transition-colors duration-200;
+    @apply px-3 py-2 text-sm text-textSecondary transition-colors duration-200 hover:text-textPrimary;
   }
-  
-  .nav-link .nav-counter {
-    @apply text-secondary font-mono mr-1;
+
+  .nav-counter {
+    @apply mr-1.5 font-mono text-xs text-secondary;
   }
-  
+
+  /* Primary gradient pill button */
   .button-primary {
-    @apply px-4 py-2 border border-secondary text-secondary rounded hover:bg-secondary/10 transition-colors duration-200 font-mono text-sm;
+    @apply inline-flex items-center justify-center rounded-full bg-secondary px-6 py-3 text-sm font-semibold text-[#06121f] shadow-[0_8px_30px_-8px_rgba(110,168,254,0.6)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-accent hover:shadow-[0_12px_40px_-8px_rgba(157,139,255,0.6)];
   }
-  
+
+  /* Secondary / ghost button */
+  .button-ghost {
+    @apply inline-flex items-center justify-center rounded-full border border-line bg-white/[0.02] px-6 py-3 text-sm font-semibold text-textPrimary transition-all duration-200 hover:-translate-y-0.5 hover:border-secondary/50 hover:text-secondary;
+  }
+
   .tech-tag {
-    @apply px-3 py-1 rounded-full text-xs font-mono bg-tertiary text-secondary mr-2 mb-2;
+    @apply rounded-full border border-line bg-white/[0.03] px-3 py-1 font-mono text-[11px] font-medium text-textSecondary transition-colors hover:border-secondary/40 hover:text-secondary;
   }
-  
+
+  /* Glassy raised card */
+  .card {
+    @apply rounded-2xl border border-line bg-surface/70 backdrop-blur-sm transition-all duration-300;
+  }
+
+  .card-interactive {
+    @apply card hover:-translate-y-1 hover:border-secondary/30 hover:bg-surfaceHover/70 hover:shadow-[0_20px_60px_-25px_rgba(110,168,254,0.35)];
+  }
+
   .glass-effect {
-    @apply backdrop-blur-md bg-tertiary/30 border border-tertiary/50 shadow-lg;
+    @apply rounded-xl border border-line bg-white/[0.03] backdrop-blur-md;
   }
-  
+
   .hover-lift {
-    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-lg;
+    @apply transition-all duration-300 hover:-translate-y-1;
   }
-  
-  .card-effect {
-    @apply bg-tertiary rounded-lg p-4 shadow-md transition-transform duration-300 hover:-translate-y-1 hover:shadow-xl;
+
+  /* Animated gradient text */
+  .text-gradient {
+    @apply bg-gradient-to-r from-secondary via-accent to-secondary bg-clip-text text-transparent;
+    background-size: 200% auto;
   }
 }
 
-/* Reset counter for each page */
-#__next {
-  counter-reset: section;
+.vertical-rl {
+  writing-mode: vertical-rl;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }

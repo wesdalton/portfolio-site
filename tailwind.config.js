@@ -8,16 +8,21 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: '#0a192f',
-        secondary: '#64ffda',
-        tertiary: '#112240',
-        textPrimary: '#ccd6f6',
-        textSecondary: '#8892b0',
+        // Dark, high-end palette
+        primary: '#070a10',       // page background (deep ink)
+        surface: '#0d121c',       // raised cards
+        surfaceHover: '#121a27',  // card hover
+        line: '#1c2533',          // hairline borders
+        tertiary: '#0d121c',      // legacy alias -> surface
+        secondary: '#6ea8fe',     // accent primary (azure)
+        accent: '#9d8bff',        // accent secondary (violet)
+        textPrimary: '#e8edf6',
+        textSecondary: '#94a3b8',
         spotify: '#1DB954',
       },
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
-        mono: ['Fira Code', 'monospace'],
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+        mono: ['"Fira Code"', 'ui-monospace', 'SFMono-Regular', 'monospace'],
       },
       animation: {
         'fade-in': 'fadeIn 1s ease-in-out',
@@ -26,6 +31,7 @@ module.exports = {
         'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
         'spin-slow': 'spin 8s linear infinite',
         'float': 'float 6s ease-in-out infinite',
+        'aurora': 'aurora 18s ease-in-out infinite',
       },
       keyframes: {
         fadeIn: {
@@ -43,6 +49,11 @@ module.exports = {
         float: {
           '0%, 100%': { transform: 'translateY(0)' },
           '50%': { transform: 'translateY(-10px)' },
+        },
+        aurora: {
+          '0%, 100%': { transform: 'translate(0, 0) scale(1)', opacity: '0.5' },
+          '33%': { transform: 'translate(6%, -4%) scale(1.1)', opacity: '0.75' },
+          '66%': { transform: 'translate(-5%, 5%) scale(0.95)', opacity: '0.6' },
         },
       },
       backgroundImage: {

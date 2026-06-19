@@ -1,90 +1,160 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import { FiMapPin, FiBookOpen } from 'react-icons/fi';
+
+const education = {
+  school: 'University of Pennsylvania',
+  degree: 'B.A. Computer Science & History',
+  gradDate: 'Expected May 2027',
+  gpa: '3.62 / 4.00',
+  coursework: [
+    'Advanced Algorithms',
+    'Applied Machine Learning',
+    'Scalable & Cloud Computing',
+    'Automata & Complexity',
+    'Data Structures',
+  ],
+};
+
+const skillGroups: { label: string; items: string[] }[] = [
+  { label: 'Languages', items: ['Python', 'TypeScript', 'Java', 'OCaml', 'SQL'] },
+  { label: 'AI / ML', items: ['PyTorch', 'Pandas', 'NumPy', 'scikit-learn', 'Solr'] },
+  { label: 'Infrastructure', items: ['GCP', 'AWS', 'Docker', 'Kubernetes', 'Terraform', 'Spark'] },
+  { label: 'Web', items: ['React', 'Next.js', 'Node.js', 'PostgreSQL', 'Tailwind'] },
+];
+
+const fade = {
+  initial: { opacity: 0, y: 24 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: '-80px' },
+};
 
 export default function About() {
-  const skills = [
-    'Python', 'JavaScript/TypeScript', 'React', 'Next.js', 'Node.js', 'Java', 'OCaml',
-    'PyTorch', 'Vertex AI', 'AWS', 'GCP', 'Docker', 'Terraform', 'Git', 'SQL', 'Postgres', 'Pinecone'
-  ];
-
   return (
-    <section id="about" className="py-20">
-      <div className="container mx-auto px-4 md:px-6">
-        <motion.h2 
-          className="section-heading"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-        >
-          About Me
-        </motion.h2>
+    <section id="about" className="scroll-mt-24 py-24">
+      <div className="section-shell">
+        <motion.div {...fade} transition={{ duration: 0.5 }}>
+          <p className="eyebrow">
+            <span className="text-textSecondary">01</span> / About
+          </p>
+          <h2 className="section-heading">The short version</h2>
+        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-10">
-          <motion.div 
-            className="md:col-span-3"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.1 }}
+        <div className="grid grid-cols-1 gap-5 lg:grid-cols-3">
+          {/* Bio */}
+          <motion.div
+            {...fade}
+            transition={{ duration: 0.5, delay: 0.05 }}
+            className="card p-7 lg:col-span-2"
           >
-            <p className="text-textSecondary mb-4">
-              Hello! I'm Wesley, a Computer Science major with a minor in Engineering Entrepreneurship at the University of Pennsylvania. 
-              I'm currently pursuing an accelerated M.S.E. in Computer & Information Science, combining technical expertise with entrepreneurial thinking 
-              to create innovative solutions that deliver real-world impact.
-            </p>
-            
-            <p className="text-textSecondary mb-4">
-              As someone passionate about building innovative solutions, I've had the opportunity to work on diverse projects 
-              from AI-driven analytics at the <span className="text-secondary">AI Business Club</span> to software engineering at <span className="text-secondary">FLORA</span>.
-            </p>
-            
-            <p className="text-textSecondary mb-4">
-              Beyond coding, I'm a former varsity athlete (football captain), current rugby player, and an entrepreneur at heart. 
-              I founded <span className="text-secondary">Gamma Technologies</span>, developing CLI software for monitoring limited releases, 
-              and even produced a documentary film that premiered on Discovery+.
-            </p>
-            
-            <p className="text-textSecondary mb-6">
-              I'm currently focused on exploring the intersection of AI, business, and software engineering, 
-              with a particular interest in creating technologies that deliver real-world impact.
-            </p>
-            
-            <p className="text-textSecondary mb-4">
-              Here are a few technologies I've been working with recently:
-            </p>
-            
-            <ul className="grid grid-cols-2 gap-2 mb-6">
-              {skills.map((skill) => (
-                <li key={skill} className="flex items-center text-textSecondary">
-                  <span className="text-secondary mr-2">›</span> {skill}
-                </li>
-              ))}
-            </ul>
+            <div className="space-y-4 text-[15px] leading-relaxed text-textSecondary">
+              <p>
+                I&apos;m a software engineer who likes turning ambiguous problems into systems people
+                actually rely on. My work spans{' '}
+                <span className="text-textPrimary">full-stack product engineering</span>,{' '}
+                <span className="text-textPrimary">applied machine learning</span>, and the{' '}
+                <span className="text-textPrimary">cloud infrastructure</span> that ties them together.
+              </p>
+              <p>
+                Right now I&apos;m a SWE intern at <span className="text-textPrimary">Anduril</span>,
+                and before that <span className="text-textPrimary">A-Life</span>. Along the way
+                I&apos;ve shipped products at early-stage startups, fine-tuned models for real users,
+                and led engineering teams through Penn&apos;s AI Business Club.
+              </p>
+              <p>
+                I study Computer Science &amp; History at Penn — the second half of that is on purpose.
+                When I&apos;m not shipping, I&apos;m usually deep in a history book or hunting down new
+                music.
+              </p>
+            </div>
           </motion.div>
-          
-          <motion.div 
-            className="md:col-span-2 flex justify-center"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
+
+          {/* Portrait */}
+          <motion.div
+            {...fade}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="card group relative min-h-[320px] overflow-hidden"
           >
-            <div className="relative mx-auto" style={{ width: '300px', height: '300px' }}>
-              {/* Glow effect container - positioned relative to center point */}
-              <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[330px] h-[330px] rounded-lg bg-secondary/20 opacity-75 blur-md group-hover:opacity-100 transition duration-300"></div>
-              
-              {/* Image container */}
-              <div className="relative h-[300px] w-[300px] overflow-hidden rounded-lg">
-                <Image 
-                  src="/images/headshot.jpeg" 
-                  alt="Wesley Dalton headshot" 
-                  fill
-                  sizes="(max-width: 768px) 100vw, 300px"
-                  style={{ objectFit: "cover" }}
-                  className="transition-transform duration-300 group-hover:scale-105"
-                />
-              </div>
+            <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent" />
+            <Image
+              src="/images/headshot.jpeg"
+              alt="Wesley Dalton"
+              width={500}
+              height={600}
+              className="h-full w-full object-cover opacity-90 transition-transform duration-500 group-hover:scale-105"
+            />
+            <div className="absolute bottom-0 left-0 right-0 z-10 flex items-center gap-2 p-5 font-mono text-xs text-textSecondary">
+              <FiMapPin className="text-secondary" />
+              Philadelphia, PA
+            </div>
+          </motion.div>
+
+          {/* Education */}
+          <motion.div
+            {...fade}
+            transition={{ duration: 0.5, delay: 0.05 }}
+            className="card p-7 lg:col-span-2"
+          >
+            <div className="mb-4 flex items-center gap-2">
+              <FiBookOpen className="text-secondary" />
+              <span className="font-mono text-xs uppercase tracking-[0.2em] text-secondary">
+                Education
+              </span>
+            </div>
+            <div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-baseline">
+              <h3 className="text-xl font-bold text-textPrimary">{education.school}</h3>
+              <span className="font-mono text-xs text-textSecondary">{education.gradDate}</span>
+            </div>
+            <p className="mt-1 text-sm text-textSecondary">
+              {education.degree} &nbsp;·&nbsp; GPA {education.gpa}
+            </p>
+            <div className="mt-5 flex flex-wrap gap-2">
+              {education.coursework.map((course) => (
+                <span key={course} className="tech-tag">
+                  {course}
+                </span>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Quick stats */}
+          <motion.div
+            {...fade}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="grid grid-cols-2 gap-5 lg:grid-cols-1"
+          >
+            <div className="card flex flex-col justify-center p-6">
+              <span className="text-3xl font-extrabold text-gradient">6+</span>
+              <span className="mt-1 text-xs text-textSecondary">engineering roles & fellowships</span>
+            </div>
+            <div className="card flex flex-col justify-center p-6">
+              <span className="text-3xl font-extrabold text-gradient">2027</span>
+              <span className="mt-1 text-xs text-textSecondary">graduating, open to full-time</span>
+            </div>
+          </motion.div>
+
+          {/* Skills */}
+          <motion.div
+            {...fade}
+            transition={{ duration: 0.5, delay: 0.05 }}
+            className="card p-7 lg:col-span-3"
+          >
+            <p className="mb-5 font-mono text-xs uppercase tracking-[0.2em] text-secondary">
+              Toolkit
+            </p>
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+              {skillGroups.map((group) => (
+                <div key={group.label}>
+                  <p className="mb-3 text-sm font-semibold text-textPrimary">{group.label}</p>
+                  <div className="flex flex-wrap gap-2">
+                    {group.items.map((item) => (
+                      <span key={item} className="tech-tag">
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ))}
             </div>
           </motion.div>
         </div>

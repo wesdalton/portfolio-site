@@ -2,18 +2,19 @@ import { motion } from 'framer-motion';
 
 export default function Footer() {
   return (
-    <footer className="py-8 text-center">
+    <footer className="border-t border-line/60 py-8">
       <motion.div
-        className="container mx-auto px-4"
+        className="section-shell flex flex-col items-center justify-between gap-2 text-center sm:flex-row sm:text-left"
         initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5, delay: 0.2 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
       >
-        <p className="text-textSecondary text-sm font-mono">
-          Designed & Built by Wesley Dalton
+        <p className="font-mono text-xs text-textSecondary">
+          Designed &amp; built by Wesley Dalton
         </p>
-        <p className="text-textSecondary text-xs mt-2">
-          &copy; {new Date().getFullYear()} All Rights Reserved
+        <p className="font-mono text-xs text-textSecondary">
+          &copy; {new Date().getFullYear()} · Next.js + Tailwind
         </p>
       </motion.div>
     </footer>

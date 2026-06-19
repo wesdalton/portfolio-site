@@ -8,9 +8,10 @@ import StructuredData from '@/components/StructuredData'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Wesley Dalton | Software Engineer & AI Developer at University of Pennsylvania',
-  description: 'Wesley Dalton is a Computer Science student at UPenn pursuing an accelerated M.S.E. in Computer & Information Science. Currently Full Stack & ML Engineering Intern at TRAK with experience in AI, machine learning, and software engineering.',
-  keywords: 'Wesley Dalton, Software Engineer, AI Developer, Machine Learning Engineer, University of Pennsylvania, UPenn, TRAK, Full Stack Developer, Computer Science, Portfolio, React, Python, Next.js',
+  metadataBase: new URL('https://wesleydalton.com'),
+  title: 'Wesley Dalton | Software Engineer',
+  description: 'Wesley Dalton is a software engineer and Computer Science & History student at the University of Pennsylvania. Currently a Software Engineering Intern at Anduril, with prior roles at A-Life, Handshake, and TRAK across full-stack, machine learning, and cloud infrastructure.',
+  keywords: 'Wesley Dalton, Software Engineer, Machine Learning Engineer, University of Pennsylvania, UPenn, Anduril, A-Life, Full Stack Developer, Computer Science, Portfolio, React, Python, Next.js',
   authors: [{ name: 'Wesley Dalton' }],
   icons: {
     icon: [
@@ -21,8 +22,8 @@ export const metadata: Metadata = {
     ],
   },
   openGraph: {
-    title: 'Wesley Dalton | Software Engineer & AI Developer at University of Pennsylvania',
-    description: 'Wesley Dalton is a Computer Science student at UPenn pursuing an accelerated M.S.E. in Computer & Information Science. Currently Full Stack & ML Engineering Intern at TRAK with experience in AI, machine learning, and software engineering.',
+    title: 'Wesley Dalton | Software Engineer',
+    description: 'Software engineer and CS & History student at UPenn. Currently a Software Engineering Intern at Anduril, with prior roles at A-Life, Handshake, and TRAK.',
     url: 'https://wesleydalton.com',
     siteName: 'Wesley Dalton - Software Engineer Portfolio',
     images: [
@@ -38,8 +39,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Wesley Dalton | Software Engineer & AI Developer at University of Pennsylvania',
-    description: 'Wesley Dalton is a Computer Science student at UPenn pursuing an accelerated M.S.E. in Computer & Information Science. Currently Full Stack & ML Engineering Intern at TRAK.',
+    title: 'Wesley Dalton | Software Engineer',
+    description: 'Software engineer and CS & History student at UPenn. Currently a Software Engineering Intern at Anduril.',
     images: ['/images/headshot.jpeg'],
   },
   robots: {

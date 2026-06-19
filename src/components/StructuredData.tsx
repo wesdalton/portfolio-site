@@ -23,13 +23,7 @@ export default function StructuredData() {
     "worksFor": [
       {
         "@type": "Organization",
-        "name": "TRAK",
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "New York",
-          "addressRegion": "NY",
-          "addressCountry": "US"
-        }
+        "name": "Anduril Industries"
       }
     ],
     "knowsAbout": [
