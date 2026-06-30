@@ -1,7 +1,9 @@
 import { motion } from 'framer-motion';
+import { FiArrowUpRight } from 'react-icons/fi';
 
 type ExperienceItem = {
   company: string;
+  url?: string;
   title: string;
   date: string;
   location?: string;
@@ -14,16 +16,18 @@ type ExperienceItem = {
 const experiences: ExperienceItem[] = [
   {
     company: 'Anduril Industries',
-    title: 'Software Engineering Intern',
+    url: 'https://www.anduril.com/lattice/mission-autonomy',
+    title: 'Software Engineering Intern · Mission Autonomy',
     date: 'May 2026 — Present',
     kind: 'Internship',
     current: true,
     summary:
-      'Building software at the defense-technology company behind Lattice OS and a family of autonomous systems.',
-    skills: ['Mission Software', 'Autonomy'],
+      'On the Mission Autonomy — Behaviors & Integrations team, defining how a network of autonomous systems sense, decide, and act together as one coordinated force across Lattice.',
+    skills: ['Mission Autonomy', 'Multi-Agent Behaviors', 'Lattice'],
   },
   {
     company: 'A-Life',
+    url: 'https://a-life.care/en/',
     title: 'Software Engineering Intern',
     date: 'Feb 2026 — May 2026',
     kind: 'Internship',
@@ -33,6 +37,7 @@ const experiences: ExperienceItem[] = [
   },
   {
     company: 'Handshake',
+    url: 'https://joinhandshake.com/ai',
     title: 'MOVE AI Fellow',
     date: 'Aug 2025 — Oct 2025',
     location: 'Remote',
@@ -43,6 +48,7 @@ const experiences: ExperienceItem[] = [
   },
   {
     company: 'TRAK',
+    url: 'http://adastrak.com/',
     title: 'Software Engineering Intern',
     date: 'May 2025 — Sep 2025',
     location: 'New York, NY',
@@ -53,6 +59,7 @@ const experiences: ExperienceItem[] = [
   },
   {
     company: 'AI Business Club @ Penn',
+    url: 'https://www.linkedin.com/company/aibusinessclub/',
     title: 'Project Lead',
     date: 'Jan 2025 — Present',
     location: 'Philadelphia, PA',
@@ -64,6 +71,7 @@ const experiences: ExperienceItem[] = [
   },
   {
     company: 'Civic',
+    url: 'https://get-civic.com/',
     title: 'ML & Automation Engineer',
     date: 'Sep 2024 — Dec 2024',
     location: 'Philadelphia, PA',
@@ -74,6 +82,7 @@ const experiences: ExperienceItem[] = [
   },
   {
     company: 'Flora',
+    url: 'https://flora.ai/',
     title: 'Software Engineering Intern',
     date: 'Jun 2024 — Aug 2024',
     location: 'New York, NY',
@@ -132,7 +141,22 @@ export default function Experience() {
                 <div className="flex flex-col gap-1.5 sm:flex-row sm:items-center sm:justify-between">
                   <h3 className="text-lg font-bold text-textPrimary">
                     {exp.title}
-                    <span className="text-secondary"> · {exp.company}</span>
+                    <span className="text-secondary">
+                      {' · '}
+                      {exp.url ? (
+                        <a
+                          href={exp.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="group/link inline-flex items-center gap-0.5 underline-offset-4 transition-colors hover:text-textPrimary hover:underline"
+                        >
+                          {exp.company}
+                          <FiArrowUpRight className="text-sm transition-transform duration-200 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
+                        </a>
+                      ) : (
+                        exp.company
+                      )}
+                    </span>
                   </h3>
                   <span
                     className={`w-fit rounded-full border px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-wider ${kindStyles[exp.kind]}`}

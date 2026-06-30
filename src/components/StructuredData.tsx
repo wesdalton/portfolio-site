@@ -37,7 +37,7 @@ export default function StructuredData() {
       "Software Engineering",
       "Full Stack Development"
     ],
-    "email": "wdalton@seas.upenn.edu",
+    "email": "wdalton@engineering.upenn.edu",
     "telephone": "(917) 572-1803",
     "address": {
       "@type": "PostalAddress",

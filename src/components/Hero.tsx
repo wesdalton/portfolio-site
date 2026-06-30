@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import TacticalGrid from './TacticalGrid';
-import { FiArrowDown, FiArrowUpRight } from 'react-icons/fi';
+import { FiArrowDown, FiArrowRight } from 'react-icons/fi';
 import NowPlaying from './NowPlaying';
 
 const typewriterPhrases = [
@@ -116,7 +116,7 @@ export default function Hero() {
           >
             <a href="#projects" className="button-primary group">
               View my work
-              <FiArrowUpRight className="ml-1.5 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              <FiArrowRight className="ml-1.5 transition-transform duration-200 group-hover:translate-x-0.5" />
             </a>
             <a href="#contact" className="button-ghost">
               Get in touch

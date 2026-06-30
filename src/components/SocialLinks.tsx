@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { FiGithub, FiLinkedin, FiMail } from 'react-icons/fi';
 
-const EMAIL = 'wdalton@seas.upenn.edu';
+const EMAIL = 'wdalton@engineering.upenn.edu';
 
 const socialLinks = [
   { icon: <FiGithub />, url: 'https://github.com/wesdalton', label: 'GitHub' },

@@ -36,9 +36,9 @@ export default function Navbar() {
           <Link
             href="/"
             aria-label="Home"
-            className="group flex h-10 w-10 items-center justify-center rounded-xl border border-line bg-surface/60 font-mono text-sm font-bold text-secondary transition-colors hover:border-secondary/50"
+            className="group flex items-center text-base font-semibold tracking-tight text-textPrimary transition-colors hover:text-secondary"
           >
-            <span className="transition-transform duration-300 group-hover:scale-110">WD</span>
+            Wesley Dalton
           </Link>
         </motion.div>
 

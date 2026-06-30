@@ -5,8 +5,8 @@ import { useEffect, useRef } from 'react';
 /**
  * Tactical grid — an interactive "command console" backdrop.
  * Faint blueprint grid lines + a dot at every intersection, sparse crosshair
- * nodes, a soft scan line drifting down, and cursor magnetism that repels and
- * lights up nearby nodes. Pure <canvas>, no dependencies. Honors reduced-motion.
+ * nodes, and cursor magnetism that repels and lights up nearby nodes.
+ * Pure <canvas>, no dependencies. Honors reduced-motion.
  */
 export default function TacticalGrid() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -31,7 +31,6 @@ export default function TacticalGrid() {
     let rows = 0;
 
     const pointer = { x: -9999, y: -9999, tx: -9999, ty: -9999, active: false };
-    let scan = 0.15;
     let raf = 0;
 
     const build = () => {
@@ -61,7 +60,6 @@ export default function TacticalGrid() {
 
       pointer.x += (pointer.tx - pointer.x) * 0.12;
       pointer.y += (pointer.ty - pointer.y) * 0.12;
-      const scanY = scan * (height + 200) - 100;
 
       // 1) faint blueprint grid lines
       ctx.lineWidth = 1;
@@ -79,22 +77,7 @@ export default function TacticalGrid() {
       }
       ctx.stroke();
 
-      // 2) scan line — a soft glowing band + crisp center line
-      if (scanY > -80 && scanY < height + 80) {
-        const grad = ctx.createLinearGradient(0, scanY - 60, 0, scanY + 60);
-        grad.addColorStop(0, `rgba(${A}, 0)`);
-        grad.addColorStop(0.5, `rgba(${A}, 0.10)`);
-        grad.addColorStop(1, `rgba(${A}, 0)`);
-        ctx.fillStyle = grad;
-        ctx.fillRect(0, scanY - 60, width, 120);
-        ctx.strokeStyle = `rgba(${A}, 0.28)`;
-        ctx.beginPath();
-        ctx.moveTo(0, scanY + 0.5);
-        ctx.lineTo(width, scanY + 0.5);
-        ctx.stroke();
-      }
-
-      // 3) nodes
+      // 2) nodes
       for (const dot of dots) {
         let { x, y } = dot;
         let alpha = 0.22;
@@ -113,9 +96,6 @@ export default function TacticalGrid() {
             radius += force * 1.6;
           }
         }
-
-        const sd = Math.abs(y - scanY);
-        if (sd < 60) alpha += (1 - sd / 60) * 0.45;
 
         alpha = Math.min(alpha, 0.95);
 
@@ -138,8 +118,6 @@ export default function TacticalGrid() {
       }
 
       if (!reduceMotion) {
-        scan += 0.0014;
-        if (scan > 1) scan = 0;
         raf = requestAnimationFrame(draw);
       }
     };

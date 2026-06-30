@@ -1,10 +1,11 @@
 import { motion } from 'framer-motion';
-import { FiExternalLink, FiGithub, FiFolder, FiArrowUpRight } from 'react-icons/fi';
+import { FiExternalLink, FiGithub } from 'react-icons/fi';
 import Image from 'next/image';
 
 type Project = {
   title: string;
   blurb: string;
+  date?: string;
   description: string;
   technologies: string[];
   link?: string;
@@ -16,10 +17,33 @@ type Project = {
 
 const featuredProjects: Project[] = [
   {
+    title: 'KRAKEN',
+    blurb: 'IEEE OCEANS 2026 · Subsea defense',
+    date: 'March 2026 — Present',
+    description:
+      'A multi-agent tethered-UUV architecture for real-time subsea threat interdiction in communication-denied waters. Built with a Cornell · MIT · Draper team at the Albacore 250 maritime-autonomy hackathon — a COTS prototype (Pixhawk/ArduPilot) plus a Monte Carlo framework showing coordinated scouts sharpen localization and intercept rates. Accepted as an IEEE paper at OCEANS 2026 Monterey; presenting in September.',
+    technologies: ['Multi-Agent Systems', 'Pixhawk / ArduPilot', 'Sensor Fusion', 'Monte Carlo', 'Python'],
+    link: '/kraken',
+    linkLabel: 'Read Paper',
+    imageSrc: '/images/kraken_project.png',
+  },
+  {
+    title: 'Mise',
+    blurb: 'iOS · Reservations on autopilot',
+    date: 'December 2025 — Present',
+    description:
+      'A shipped iOS app that lands tables at the world’s hardest-to-book restaurants. A real-time engine watches Resy, OpenTable, SevenRooms, and DoorDash around the clock and books in milliseconds the instant a seat drops — backed by an encrypted credential vault and Stripe billing. Now serving 200+ customers.',
+    technologies: ['iOS', 'Real-Time Systems', 'Push Notifications', 'Stripe', 'Encryption'],
+    link: 'https://bookmise.com',
+    linkLabel: 'Live',
+    imageSrc: '/images/mise_project.png',
+  },
+  {
     title: 'Respire',
     blurb: 'Burnout prevention, 7 days early',
+    date: 'May — August 2025',
     description:
-      'A full-stack wellness app that fuses WHOOP biometrics — HRV, sleep, and strain — into a multi-signal ML model, flagging burnout risk roughly a week before clinical benchmarks.',
+      'A full-stack wellness app that fuses WHOOP biometrics — HRV, sleep, and strain — into a multi-signal ML model, flagging burnout risk roughly a week before clinical benchmarks. Pulls live data through the WHOOP API, surfaces trends in an interactive Plotly dashboard, and turns each forecast into concrete recovery recommendations.',
     technologies: ['Flask', 'Supabase', 'ML', 'WHOOP API', 'Plotly'],
     link: 'https://try.respire.cloud',
     linkLabel: 'Live',
@@ -28,32 +52,11 @@ const featuredProjects: Project[] = [
   {
     title: 'InstaLite',
     blurb: 'A social network that scales',
+    date: 'February — May 2025',
     description:
       'A production-grade social platform with PageRank feed ranking (Spark), facial recognition (TensorFlow), and real-time chat (Kafka) — scaled to 10,000+ concurrent users on AWS at sub-second latency.',
     technologies: ['Node.js', 'Spark', 'TensorFlow', 'Kafka', 'AWS', 'DynamoDB'],
     accent: 'from-secondary/30 to-accent/20',
-  },
-];
-
-const otherProjects: Project[] = [
-  {
-    title: 'Headline Classifier',
-    blurb: 'Applied ML · CIS 5190',
-    description:
-      'An NLP model classifying news headlines by topic and source, with a full experimental writeup from Penn’s Applied Machine Learning course.',
-    technologies: ['PyTorch', 'NLP', 'scikit-learn'],
-    link: '/headline-classifier',
-    linkLabel: 'Report',
-  },
-  {
-    title: 'This Website',
-    blurb: 'Designed & built from scratch',
-    description:
-      'A dark, motion-driven portfolio built with Next.js and Framer Motion, with a live Spotify now-playing integration and an interactive canvas grid.',
-    technologies: ['Next.js', 'TypeScript', 'Tailwind', 'Canvas'],
-    link: 'https://wesleydalton.com',
-    linkLabel: 'Live',
-    github: 'https://github.com/wesdalton/portfolio-site',
   },
 ];
 
@@ -109,6 +112,9 @@ export default function Projects() {
                   <div>
                     <h3 className="text-xl font-bold text-textPrimary">{project.title}</h3>
                     <p className="font-mono text-xs text-secondary">{project.blurb}</p>
+                    {project.date && (
+                      <p className="mt-0.5 font-mono text-[11px] text-textSecondary">{project.date}</p>
+                    )}
                   </div>
                   <div className="flex items-center gap-3 text-textSecondary">
                     {project.github && (
@@ -127,9 +133,12 @@ export default function Projects() {
                         href={project.link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        aria-label={`${project.title} link`}
-                        className="transition-colors hover:text-secondary"
+                        aria-label={`${project.title} ${project.linkLabel ?? 'link'}`}
+                        className="inline-flex items-center gap-1.5 whitespace-nowrap transition-colors hover:text-secondary"
                       >
+                        {project.linkLabel && (
+                          <span className="font-mono text-xs">{project.linkLabel}</span>
+                        )}
                         <FiExternalLink size={18} />
                       </a>
                     )}
@@ -149,41 +158,6 @@ export default function Projects() {
                 </div>
               </div>
             </motion.div>
-          ))}
-        </div>
-
-        {/* Additional */}
-        <div className="mt-5 grid grid-cols-1 gap-5 md:grid-cols-2">
-          {otherProjects.map((project, index) => (
-            <motion.a
-              key={project.title}
-              href={project.link ?? project.github ?? '#'}
-              target={project.link?.startsWith('http') || project.github ? '_blank' : undefined}
-              rel="noopener noreferrer"
-              {...fade}
-              transition={{ duration: 0.5, delay: index * 0.08 }}
-              className="card-interactive group flex flex-col p-6"
-            >
-              <div className="mb-4 flex items-center justify-between">
-                <FiFolder className="text-secondary" size={26} />
-                <FiArrowUpRight
-                  className="text-textSecondary transition-all duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-secondary"
-                  size={18}
-                />
-              </div>
-              <h4 className="text-lg font-bold text-textPrimary">{project.title}</h4>
-              <p className="font-mono text-xs text-secondary">{project.blurb}</p>
-              <p className="mt-3 flex-1 text-sm leading-relaxed text-textSecondary">
-                {project.description}
-              </p>
-              <div className="mt-5 flex flex-wrap gap-2">
-                {project.technologies.map((tech) => (
-                  <span key={tech} className="tech-tag">
-                    {tech}
-                  </span>
-                ))}
-              </div>
-            </motion.a>
           ))}
         </div>
       </div>

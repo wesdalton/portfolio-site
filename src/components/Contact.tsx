@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FiMail, FiLinkedin, FiGithub, FiCopy, FiCheck } from 'react-icons/fi';
 
-const EMAIL = 'wdalton@seas.upenn.edu';
+const EMAIL = 'wdalton@engineering.upenn.edu';
 
 const fade = {
   initial: { opacity: 0, y: 24 },
