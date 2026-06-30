@@ -11,7 +11,7 @@ const navLinks = [
 ];
 
 const RESUME_URL =
-  'https://drive.google.com/file/d/1qOQ7VHSgNberDKJLCQIjW6VbksGKJ2pMvHnHG0VNkjw/preview';
+  'https://docs.google.com/document/d/1I3C_ncTJdxCWSQNDamvejA_VmepVb5KTBZw76NN1K-Y/preview';
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
