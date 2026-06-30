@@ -17,7 +17,7 @@ const experiences: ExperienceItem[] = [
   {
     company: 'Anduril Industries',
     url: 'https://www.anduril.com/lattice/mission-autonomy',
-    title: 'Software Engineering Intern · Mission Autonomy',
+    title: 'Software Engineering Intern',
     date: 'May 2026 — Present',
     location: 'Boston, MA',
     kind: 'Internship',
