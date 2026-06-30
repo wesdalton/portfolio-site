@@ -41,7 +41,7 @@ const featuredProjects: Project[] = [
   {
     title: 'Respire',
     blurb: 'Burnout prevention, 7 days early',
-    date: 'May — August 2025',
+    date: 'February — August 2025',
     description:
       'A full-stack wellness app that fuses WHOOP biometrics — HRV, sleep, and strain — into a multi-signal ML model, flagging burnout risk roughly a week before clinical benchmarks. Pulls live data through the WHOOP API, surfaces trends in an interactive Plotly dashboard, and turns each forecast into concrete recovery recommendations.',
     technologies: ['Flask', 'Supabase', 'ML', 'WHOOP API', 'Plotly'],
