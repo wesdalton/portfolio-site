@@ -1,47 +1,8 @@
-import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import TacticalGrid from './TacticalGrid';
 import { FiArrowDown, FiArrowRight } from 'react-icons/fi';
-import NowPlaying from './NowPlaying';
-
-const typewriterPhrases = [
-  'mission-critical systems',
-  'AI-driven products',
-  'full-stack platforms',
-  'tools people rely on',
-];
 
 export default function Hero() {
-  const [displayText, setDisplayText] = useState('');
-  const [currentPhrase, setCurrentPhrase] = useState(0);
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [typingSpeed, setTypingSpeed] = useState(70);
-
-  useEffect(() => {
-    const handleTyping = () => {
-      const currentText = typewriterPhrases[currentPhrase];
-
-      if (!isDeleting && displayText.length < currentText.length) {
-        setDisplayText(currentText.substring(0, displayText.length + 1));
-        setTypingSpeed(55 + Math.random() * 20);
-      } else if (!isDeleting && displayText.length === currentText.length) {
-        setIsDeleting(true);
-        setTypingSpeed(2400);
-      } else if (isDeleting && displayText.length > 0) {
-        const charsToRemove = Math.min(displayText.length, Math.random() < 0.7 ? 1 : 2);
-        setDisplayText(currentText.substring(0, displayText.length - charsToRemove));
-        setTypingSpeed(28 + Math.random() * 15);
-      } else if (isDeleting && displayText.length === 0) {
-        setIsDeleting(false);
-        setCurrentPhrase((prev) => (prev + 1) % typewriterPhrases.length);
-        setTypingSpeed(280);
-      }
-    };
-
-    const typingTimer = setTimeout(handleTyping, typingSpeed);
-    return () => clearTimeout(typingTimer);
-  }, [displayText, currentPhrase, isDeleting, typingSpeed]);
-
   return (
     <section id="home" className="relative flex min-h-screen items-center pt-24">
       <TacticalGrid />
@@ -56,10 +17,7 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
-            </span>
+            <span className="h-2 w-2 rounded-full bg-emerald-400" />
             <span className="font-mono">SWE Intern @ Anduril</span>
           </motion.a>
 
@@ -78,22 +36,17 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
-            <span className="text-gradient animate-[aurora_8s_ease_infinite]">Wesley Dalton</span>
+            <span className="text-gradient">Wesley Dalton</span>
           </motion.h1>
 
           <motion.h2
-            className="mb-7 flex flex-row flex-wrap items-baseline gap-x-3 text-2xl font-bold text-textSecondary sm:text-3xl md:text-4xl"
+            className="mb-7 max-w-2xl text-2xl font-bold text-textSecondary sm:text-3xl md:text-4xl"
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.15 }}
           >
-            <span>I build</span>
-            <span className="flex items-baseline">
-              <span className="relative inline-block text-textPrimary after:absolute after:right-[-3px] after:top-1 after:h-[0.85em] after:w-[2px] after:animate-[blink_0.85s_infinite] after:bg-secondary">
-                {displayText}
-              </span>
-              <span className="text-secondary">.</span>
-            </span>
+            I build <span className="text-textPrimary">mission-critical systems</span>, AI-driven
+            products, and the tools people rely on<span className="text-secondary">.</span>
           </motion.h2>
 
           <motion.p
@@ -122,15 +75,6 @@ export default function Hero() {
               Get in touch
             </a>
           </motion.div>
-
-          <motion.div
-            className="mt-12"
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.35 }}
-          >
-            <NowPlaying />
-          </motion.div>
         </div>
       </div>
 
@@ -146,7 +90,7 @@ export default function Hero() {
           aria-label="Scroll to about section"
         >
           <span className="mb-2 font-mono text-[10px] uppercase tracking-[0.25em]">Scroll</span>
-          <FiArrowDown className="animate-bounce" />
+          <FiArrowDown />
         </a>
       </motion.div>
     </section>
