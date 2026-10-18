@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import Fireflies from '@/components/Fireflies';
 
 const links = [
   { label: 'Email', href: 'mailto:wdalton@engineering.upenn.edu' },
@@ -11,7 +10,6 @@ const links = [
 export default function Intro() {
   return (
     <header className="intro" id="home">
-      <Fireflies />
       <div className="name-row">
         <Image
           className="portrait"
