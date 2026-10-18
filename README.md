@@ -25,11 +25,10 @@ npm start
 
 ## Content
 
-- `src/components/Hero.tsx` and `About.tsx`: introduction and education.
-- `src/components/Projects.tsx`: selected work and supporting links.
+- `src/components/Hero.tsx`: name, introduction, and contact links.
+- `src/components/Projects.tsx`: the work list and the shared dated-list component.
 - `src/components/Experience.tsx`: work history.
-- `src/components/Contact.tsx`: contact links.
-- `src/styles/globals.css`: typography, spacing, colors, and responsive layout.
+- `src/styles/globals.css`: typography, spacing, light and dark colors, and layout.
 - `src/app/layout.tsx` and `src/components/StructuredData.tsx`: search metadata.
 
 The existing document routes remain available:
