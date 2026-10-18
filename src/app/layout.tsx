@@ -4,7 +4,7 @@ import { Analytics } from '@vercel/analytics/next';
 import StructuredData from '@/components/StructuredData';
 
 const description =
-  'Wesley Dalton is a software engineer studying Computer Science and History at Penn. He builds products and researches how AI agents check evidence.';
+  'Wesley Dalton is a software engineer studying Computer Science and History at Penn. He builds products and mission-critical systems across autonomy, automation, and AI.';
 
 export const viewport: Viewport = {
   themeColor: [

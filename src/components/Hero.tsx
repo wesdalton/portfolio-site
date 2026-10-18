@@ -11,7 +11,8 @@ export default function Intro() {
       <h1>Wesley Dalton</h1>
       <p>
         I&apos;m a software engineer studying Computer Science and History at Penn,
-        graduating in December 2026. I build products and study how AI systems behave.
+        graduating in December 2026. I build products and mission-critical systems across
+        autonomy, automation, and AI.
       </p>
       <p>
         Right now I&apos;m researching whether AI agents stop checking for themselves when
