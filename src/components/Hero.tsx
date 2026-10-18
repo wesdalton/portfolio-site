@@ -1,3 +1,6 @@
+import Image from 'next/image';
+import Fireflies from '@/components/Fireflies';
+
 const links = [
   { label: 'Email', href: 'mailto:wdalton@engineering.upenn.edu' },
   { label: 'GitHub', href: 'https://github.com/wesdalton' },
@@ -8,16 +11,30 @@ const links = [
 export default function Intro() {
   return (
     <header className="intro" id="home">
-      <h1>Wesley Dalton</h1>
+      <Fireflies />
+      <div className="name-row">
+        <Image
+          className="portrait"
+          src="/images/wesley.jpg"
+          alt="Wesley Dalton"
+          width={64}
+          height={64}
+          priority
+        />
+        <h1>Wesley Dalton</h1>
+      </div>
       <p>
         I&apos;m a software engineer studying Computer Science and History at Penn,
         graduating in December 2026. I build products and mission-critical systems across
-        autonomy, automation, and AI.
+        autonomy, automation, and AI. I&apos;m also an AI Safety Fundamentals Fellow with
+        Safe AI @ Penn.
       </p>
-      <p>
-        Right now I&apos;m researching whether AI agents stop checking for themselves when
-        their peers agree. Most recently I wrote autonomy software at Anduril. I&apos;m also an
-        AI Safety Fundamentals Fellow with Safe AI @ Penn.
+      <p className="now">
+        <span className="now-label">Now</span>
+        <span>
+          Running the next <a href="https://witness-evaluation-lab.beigeglade34.chatgpt.site">Witness</a>{' '}
+          experiment: do AI agents stop checking for themselves when their peers agree?
+        </span>
       </p>
       <nav className="intro-links" aria-label="Contact and profiles">
         {links.map((link) => (
