@@ -3,9 +3,9 @@
 Source for [wesleydalton.com](https://wesleydalton.com): a minimal portfolio with a
 short introduction, selected projects, experience, and contact links.
 
-The homepage uses server-rendered React and CSS. Its layout needs no animation
-library, scroll listeners, or music API requests. It supports keyboard navigation,
-small screens, and reduced-motion preferences.
+The homepage is server-rendered React with one stylesheet. It ships no animation
+library, icon set, scroll listeners, or music API requests. It supports keyboard
+navigation, small screens, and light and dark color schemes.
 
 ## Development
 
