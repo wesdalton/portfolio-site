@@ -25,7 +25,7 @@ const projects: Project[] = [
       'A restaurant booking app I built and operate solo. Native Swift on iOS, a Python backend, and integrations with booking platforms that offer no public API.',
     detail:
       '350 users through word of mouth. Agent-written changes go through automated tests and end-to-end staging before release.',
-    href: 'https://bookmise.com',
+    href: 'https://bookmise.com/archive',
     linkLabel: 'Visit Mise',
   },
   {
