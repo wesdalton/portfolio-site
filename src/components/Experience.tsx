@@ -1,73 +1,43 @@
-type ExperienceItem = {
-  company: string;
-  href: string;
-  role: string;
-  dates: string;
-  description: string;
-};
+import { EntryList, type Entry } from '@/components/Projects';
 
-const experiences: ExperienceItem[] = [
+const experience: Entry[] = [
   {
-    company: 'Anduril Industries',
+    name: 'Anduril',
+    year: '2026',
     href: 'https://www.anduril.com/lattice/mission-autonomy',
-    role: 'Software Engineer Intern',
-    dates: 'May–Aug 2026',
-    description:
-      'Rewrote the autonomous behaviors catalog in C++ and Python. Built an on-asset database plugin and testing from unit checks through hardware-in-the-loop.',
+    text: 'Software engineer intern. Rewrote the autonomous behaviors catalog in C++ and Python, with testing from unit checks through hardware-in-the-loop.',
   },
   {
-    company: 'A-Life',
+    name: 'A-Life',
+    year: '2026',
     href: 'https://a-life.care/en/',
-    role: 'Software Engineer Intern',
-    dates: 'Feb–May 2026',
-    description:
-      'Built a vision-model pipeline for medical reports and biomarkers, a collaborative clinical editor, and scoring engines for visit preparation.',
+    text: 'Software engineer intern. Built a vision-model pipeline that reads medical reports into a biomarker catalog, and a collaborative clinical editor.',
   },
   {
-    company: 'Handshake',
+    name: 'Handshake',
+    year: '2025',
     href: 'https://joinhandshake.com/ai',
-    role: 'MOVE AI Fellow',
-    dates: 'Aug–Nov 2025',
-    description:
-      'Designed adversarial prompts and evaluated frontier model outputs for reasoning, factuality, instruction following, and safety failures.',
+    text: 'MOVE AI Fellow. Wrote adversarial prompts and graded frontier model outputs for reasoning, factuality, and safety failures.',
   },
   {
-    company: 'TRAK',
+    name: 'TRAK',
+    year: '2025',
     href: 'https://adastrak.com/',
-    role: 'Software Engineer Intern',
-    dates: 'May–Sep 2025',
-    description:
-      'Built BERT-based models for vehicle sensor recalibration, an ETL pipeline over 44,000+ service documents, and a migration to GCP.',
+    text: 'Software engineer intern. Built BERT-based models that predict vehicle sensor recalibration from 44,000+ service documents.',
   },
   {
-    company: 'Flora',
+    name: 'Flora',
+    year: '2024',
     href: 'https://flora.ai/',
-    role: 'Software Engineer Intern',
-    dates: 'Jun–Aug 2024',
-    description:
-      'Built a node-based generation pipeline connecting image, video, and text models, with real-time status across 10,000+ daily generations.',
+    text: 'Software engineer intern. Built the node-based pipeline that chains image, video, and text models across 10,000+ daily generations.',
   },
 ];
 
 export default function Experience() {
   return (
-    <section className="page-section" id="experience" aria-labelledby="experience-title">
-      <div className="section-heading">
-        <h2 id="experience-title">Experience</h2>
-        <a href="/resume">Full résumé <span aria-hidden="true">↗</span></a>
-      </div>
-      <ol className="experience-list">
-        {experiences.map((experience) => (
-          <li className="experience" key={experience.company}>
-            <div className="experience-heading">
-              <h3><a href={experience.href}>{experience.company}</a></h3>
-              <span className="experience-dates">{experience.dates}</span>
-            </div>
-            <p className="experience-role">{experience.role}</p>
-            <p className="experience-description">{experience.description}</p>
-          </li>
-        ))}
-      </ol>
+    <section className="section" id="experience" aria-labelledby="experience-title">
+      <h2 id="experience-title">Experience</h2>
+      <EntryList entries={experience} />
     </section>
   );
 }

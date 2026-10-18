@@ -1,10 +1,17 @@
 import '@/styles/globals.css';
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Analytics } from '@vercel/analytics/next';
 import StructuredData from '@/components/StructuredData';
 
 const description =
-  'Wesley Dalton is a software engineer studying Computer Science and History at Penn. Selected work in AI evaluation, autonomous systems, and product engineering.';
+  'Wesley Dalton is a software engineer studying Computer Science and History at Penn. He builds products and researches how AI agents check evidence.';
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#faf9f6' },
+    { media: '(prefers-color-scheme: dark)', color: '#141615' },
+  ],
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://wesleydalton.com'),

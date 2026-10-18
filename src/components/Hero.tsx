@@ -1,18 +1,28 @@
-export default function Hero() {
+const links = [
+  { label: 'Email', href: 'mailto:wdalton@engineering.upenn.edu' },
+  { label: 'GitHub', href: 'https://github.com/wesdalton' },
+  { label: 'LinkedIn', href: 'https://linkedin.com/in/wesley-dalton/' },
+  { label: 'Résumé', href: '/resume' },
+];
+
+export default function Intro() {
   return (
-    <section className="intro" id="home" aria-labelledby="name">
-      <p className="eyebrow">Software engineer · Philadelphia</p>
-      <h1 id="name">Wesley Dalton</h1>
-      <p className="intro-statement">I build products and study how AI systems behave.</p>
-      <p className="intro-description">
-        Computer Science &amp; History at Penn. My work spans autonomy,
-        AI evaluation, and the engineering that brings products into the world.
+    <header className="intro" id="home">
+      <h1>Wesley Dalton</h1>
+      <p>
+        I&apos;m a software engineer studying Computer Science and History at Penn,
+        graduating in December 2026. I build products and study how AI systems behave.
       </p>
-      <div className="intro-links" aria-label="Find me online">
-        <a href="mailto:wdalton@engineering.upenn.edu">Email <span aria-hidden="true">↗</span></a>
-        <a href="https://github.com/wesdalton">GitHub <span aria-hidden="true">↗</span></a>
-        <a href="https://linkedin.com/in/wesley-dalton/">LinkedIn <span aria-hidden="true">↗</span></a>
-      </div>
-    </section>
+      <p>
+        Right now I&apos;m researching whether AI agents stop checking for themselves when
+        their peers agree. Most recently I wrote autonomy software at Anduril. I&apos;m also an
+        AI Safety Fundamentals Fellow with Safe AI @ Penn.
+      </p>
+      <nav className="intro-links" aria-label="Contact and profiles">
+        {links.map((link) => (
+          <a key={link.label} href={link.href}>{link.label}</a>
+        ))}
+      </nav>
+    </header>
   );
 }
