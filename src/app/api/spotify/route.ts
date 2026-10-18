@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server';
 
-// These would normally be environment variables
-const client_id = '2ce689cb08f641d0b0dfeb4865135662';
-const client_secret = '612ef6115f2b4544bb9c69d755ebf4da';
-const refresh_token = 'AQCH_9MjYQNgGOIgSd0_-uItYQI0Bs1c6ZIAs7D73FTQUdnulCLPl_1Pu_GIFymmuqs91GmooeFe1oYnTVVAxOL3enqrNMvAIFmcscEm6Ma4MneRykeTUkv-UVozBB2iAOY';
+// Optional legacy integration; credentials are configured only on the server.
+const client_id = process.env.SPOTIFY_CLIENT_ID || '';
+const client_secret = process.env.SPOTIFY_CLIENT_SECRET || '';
+const refresh_token = process.env.SPOTIFY_REFRESH_TOKEN || '';
 
 const basic = Buffer.from(`${client_id}:${client_secret}`).toString('base64');
 const NOW_PLAYING_ENDPOINT = `https://api.spotify.com/v1/me/player/currently-playing`;
@@ -79,6 +79,13 @@ const getAccessToken = async () => {
 export const dynamic = 'force-dynamic'; // Force the route to be dynamically evaluated for each request
 
 export async function GET() {
+  if (!client_id || !client_secret || !refresh_token) {
+    return NextResponse.json(
+      { isPlaying: false, configured: false },
+      { headers: { 'Cache-Control': 'no-store' } },
+    );
+  }
+
   try {
     // Set cache control headers for 15 seconds
     const headers = {

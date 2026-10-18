@@ -1,46 +1,33 @@
-import '@/styles/globals.css'
-import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
-import { Analytics } from '@vercel/analytics/next'
-import ScrollProgress from '@/components/ScrollProgress'
-import StructuredData from '@/components/StructuredData'
+import '@/styles/globals.css';
+import type { Metadata } from 'next';
+import { Analytics } from '@vercel/analytics/next';
+import StructuredData from '@/components/StructuredData';
 
-const inter = Inter({ subsets: ['latin'] })
+const description =
+  'Wesley Dalton is a software engineer studying Computer Science and History at Penn. Selected work in AI evaluation, autonomous systems, and product engineering.';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://wesleydalton.com'),
-  title: 'Wesley Dalton | Software Engineer',
-  description: 'Wesley Dalton is a software engineer and Computer Science & History student at the University of Pennsylvania. Currently a Software Engineering Intern at Anduril, with prior roles at A-Life, Handshake, and TRAK across full-stack, machine learning, and cloud infrastructure.',
-  keywords: 'Wesley Dalton, Software Engineer, Machine Learning Engineer, University of Pennsylvania, UPenn, Anduril, A-Life, Full Stack Developer, Computer Science, Portfolio, React, Python, Next.js',
+  title: 'Wesley Dalton — Software Engineer',
+  description,
   authors: [{ name: 'Wesley Dalton' }],
   icons: {
-    icon: [
-      { url: '/favicon.svg' },
-    ],
-    apple: [
-      { url: '/apple-touch-icon.svg' },
-    ],
+    icon: [{ url: '/favicon.svg' }],
+    apple: [{ url: '/apple-touch-icon.svg' }],
   },
   openGraph: {
-    title: 'Wesley Dalton | Software Engineer',
-    description: 'Software engineer and CS & History student at UPenn. Currently a Software Engineering Intern at Anduril, with prior roles at A-Life, Handshake, and TRAK.',
+    title: 'Wesley Dalton — Software Engineer',
+    description,
     url: 'https://wesleydalton.com',
-    siteName: 'Wesley Dalton - Software Engineer Portfolio',
-    images: [
-      {
-        url: '/images/headshot.jpeg',
-        width: 1200,
-        height: 630,
-        alt: 'Wesley Dalton Portfolio',
-      },
-    ],
+    siteName: 'Wesley Dalton',
+    images: [{ url: '/images/headshot.jpeg', alt: 'Wesley Dalton' }],
     locale: 'en_US',
     type: 'website',
   },
   twitter: {
-    card: 'summary_large_image',
-    title: 'Wesley Dalton | Software Engineer',
-    description: 'Software engineer and CS & History student at UPenn. Currently a Software Engineering Intern at Anduril.',
+    card: 'summary',
+    title: 'Wesley Dalton — Software Engineer',
+    description,
     images: ['/images/headshot.jpeg'],
   },
   robots: {
@@ -57,26 +44,17 @@ export const metadata: Metadata = {
   verification: {
     google: 'T_R994_GjgkMq_AYLDu9vzV5HKoC1Q6jf9dv1taSPUg',
   },
-  alternates: {
-    canonical: 'https://wesleydalton.com',
-  },
-}
+  alternates: { canonical: 'https://wesleydalton.com' },
+};
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <head>
-        <StructuredData />
-      </head>
-      <body className={`${inter.className} antialiased overflow-x-hidden`}>
-        <ScrollProgress />
+    <html lang="en">
+      <head><StructuredData /></head>
+      <body>
         {children}
         <Analytics />
       </body>
     </html>
-  )
+  );
 }

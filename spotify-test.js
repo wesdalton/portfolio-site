@@ -1,9 +1,14 @@
 // Simple script to test Spotify credentials
 
 // Spotify credentials from your app 
-const client_id = '2ce689cb08f641d0b0dfeb4865135662';
-const client_secret = '612ef6115f2b4544bb9c69d755ebf4da';
-const refresh_token = 'AQDPgj-B8bwKMC6Jm3Io9Eb0m5912lKFdheRU3FtwCZVjFDvDnCQomApX9mJHJEtJQ6AKg7q-QNOa1uzrzQlioTUatq36S-o7NpCkGqFDM70E7qRn3h7HElftSUdN3JTG3U';
+const client_id = process.env.SPOTIFY_CLIENT_ID || '';
+const client_secret = process.env.SPOTIFY_CLIENT_SECRET || '';
+const refresh_token = process.env.SPOTIFY_REFRESH_TOKEN || '';
+
+if (!client_id || !client_secret || !refresh_token) {
+  throw new Error('Configure the required SPOTIFY_* environment variables before running this helper.');
+}
+
 
 // API endpoints
 const TOKEN_ENDPOINT = `https://accounts.spotify.com/api/token`;

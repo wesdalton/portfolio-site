@@ -1,73 +1,56 @@
-https://wesleydalton.com
-# Wesley Dalton Portfolio
+# Wesley Dalton
 
-A modern portfolio website built with Next.js, React, Tailwind CSS, and Framer Motion.
+Source for [wesleydalton.com](https://wesleydalton.com): a minimal portfolio with a
+short introduction, selected projects, experience, and contact links.
 
-## Features
+The homepage uses server-rendered React and CSS. Its layout needs no animation
+library, scroll listeners, or music API requests. It supports keyboard navigation,
+small screens, and reduced-motion preferences.
 
-- 🌓 Modern UI design with sophisticated animations
-- 📱 Fully responsive design for all screen sizes
-- ⚡ Fast performance with Next.js
-- 🔄 Interactive components with Framer Motion animations
-- 🌐 3D particle system using Three.js
+## Development
 
-## Tech Stack
+Use Node.js 20 or later and the checked-in npm lockfile.
 
-- **Framework**: Next.js
-- **UI**: React, Tailwind CSS
-- **Animations**: Framer Motion, GSAP
-- **3D**: Three.js
-- **Icons**: React Icons
-- **Type Checking**: TypeScript
-
-## Getting Started
-
-### Prerequisites
-
-- Node.js (v14 or later)
-- npm or yarn
-
-### Installation
-
-1. Install dependencies:
-
-```bash
-npm install
-```
-
-2. Run the development server:
-
-```bash
+```sh
+npm ci
 npm run dev
 ```
 
-3. Open [http://localhost:3000](http://localhost:3000) in your browser.
+Open `http://localhost:3000`.
 
-### Building for Production
-
-```bash
+```sh
 npm run build
+npm start
 ```
 
-### Running Production Build
+## Content
 
-```bash
-npm run start
-```
+- `src/components/Hero.tsx` and `About.tsx`: introduction and education.
+- `src/components/Projects.tsx`: selected work and supporting links.
+- `src/components/Experience.tsx`: work history.
+- `src/components/Contact.tsx`: contact links.
+- `src/styles/globals.css`: typography, spacing, colors, and responsive layout.
+- `src/app/layout.tsx` and `src/components/StructuredData.tsx`: search metadata.
 
-## Project Structure
+The existing document routes remain available:
 
-- `src/app/` - App router pages
-- `src/components/` - Reusable React components
-- `src/styles/` - Global styles
-- `public/` - Static assets
+- `/resume` redirects to the hosted résumé.
+- `/kraken` redirects to the KRAKEN paper in `public/`.
+- `/headline-classifier` redirects to the course project report in `public/`.
 
-## Customization
+The legacy Spotify API route remains available, but the homepage does not call it
+or require Spotify credentials.
 
-- Update personal information in the component files
-- Replace placeholder images in the `public/images` directory
-- Customize colors in `tailwind.config.js`
+If retaining that integration, configure `SPOTIFY_CLIENT_ID`,
+`SPOTIFY_CLIENT_SECRET`, and `SPOTIFY_REFRESH_TOKEN` as server environment variables.
+Without them, the endpoint returns an inactive response without contacting Spotify.
+The local OAuth helpers also read environment variables (`SPOTIFY_AUTH_CODE` for
+the exchange helpers). Never put returned credentials in source files. Credentials
+previously committed to this repository must be rotated in Spotify; removing them
+from the current source does not remove them from Git history.
 
-## License
+## Deployment
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+The repository is connected to the existing Vercel project. Branch pushes create
+previews; updates to `main` publish the production site. Keep local credentials and
+Vercel project state outside source control.

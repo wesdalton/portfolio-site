@@ -1,56 +1,36 @@
 export default function StructuredData() {
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Wesley Dalton",
-    "jobTitle": "Software Engineer",
-    "description": "Computer Science major at University of Pennsylvania with experience in AI, machine learning, and software engineering",
-    "url": "https://wesleydalton.com",
-    "sameAs": [
-      "https://linkedin.com/in/wesley-dalton",
-      "https://github.com/wesdalton"
+  const person = {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: 'Wesley Dalton',
+    jobTitle: 'Software Engineer',
+    description:
+      'Software engineer studying Computer Science and History at the University of Pennsylvania, with experience in AI evaluation, autonomy, and product engineering.',
+    url: 'https://wesleydalton.com',
+    sameAs: [
+      'https://linkedin.com/in/wesley-dalton',
+      'https://github.com/wesdalton',
     ],
-    "alumniOf": {
-      "@type": "CollegeOrUniversity",
-      "name": "University of Pennsylvania",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Philadelphia",
-        "addressRegion": "PA",
-        "addressCountry": "US"
-      }
+    affiliation: {
+      '@type': 'CollegeOrUniversity',
+      name: 'University of Pennsylvania',
     },
-    "worksFor": [
-      {
-        "@type": "Organization",
-        "name": "Anduril Industries"
-      }
+    knowsAbout: [
+      'Software Engineering',
+      'AI Evaluation',
+      'Autonomous Systems',
+      'Python',
+      'C++',
+      'TypeScript',
+      'Swift',
     ],
-    "knowsAbout": [
-      "Python",
-      "JavaScript",
-      "TypeScript",
-      "React",
-      "Next.js",
-      "Machine Learning",
-      "Artificial Intelligence",
-      "Software Engineering",
-      "Full Stack Development"
-    ],
-    "email": "wdalton@engineering.upenn.edu",
-    "telephone": "(917) 572-1803",
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "Philadelphia",
-      "addressRegion": "PA",
-      "addressCountry": "US"
-    }
+    email: 'wdalton@engineering.upenn.edu',
   };
 
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(person) }}
     />
   );
 }

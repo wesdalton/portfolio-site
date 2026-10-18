@@ -1,10 +1,15 @@
 const https = require('https');
 
 // Your Spotify credentials
-const CLIENT_ID = '2ce689cb08f641d0b0dfeb4865135662';
-const CLIENT_SECRET = '612ef6115f2b4544bb9c69d755ebf4da';
+const CLIENT_ID = process.env.SPOTIFY_CLIENT_ID || '';
+const CLIENT_SECRET = process.env.SPOTIFY_CLIENT_SECRET || '';
 const REDIRECT_URI = 'http://localhost:3000/callback'; // REPLACE THIS with your actual redirect URI
-const AUTH_CODE = 'AQBOPplnTA8anK4QAVW17I57W8VfDrlF1qa3uDYPvM6v7L8SPxs2rUkYcVbI5ub_U6MIXHIvEHjYmN11cd2iUVOxK61Su8CZFm4Ni5I6Vf32Ku2MIEbvqm-qD0It4vv-f8evoeouJpz0YroxRAlo0htOXyoWdOXdH0K2c6AdL35wXl5Tb4q8xNKQIBVNz99Hs5VmQKoXb3HnIz-mf4a7OVOi_uHCfnGxM9ofmxlHSQ3yCsgb31NMpAvEqZZwUHhayeXRbw3jBrPvQqI';
+const AUTH_CODE = process.env.SPOTIFY_AUTH_CODE || '';
+
+if (!CLIENT_ID || !CLIENT_SECRET || !AUTH_CODE) {
+  throw new Error('Configure the required SPOTIFY_* environment variables before running this helper.');
+}
+
 
 // Prepare the request data
 const authHeader = `Basic ${Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString('base64')}`;
@@ -48,8 +53,8 @@ const req = https.request(options, (res) => {
         console.log('Token Type:', response.token_type);
         console.log('Expires In:', response.expires_in, 'seconds');
         console.log('Scope:', response.scope);
-        console.log('\nUPDATE YOUR CODE WITH THIS REFRESH TOKEN:');
-        console.log('const refresh_token = \'' + response.refresh_token + '\';');
+        console.log('\nSet SPOTIFY_REFRESH_TOKEN in your local environment:');
+        console.log('Store the refresh token in your local environment, never in source files.');
       }
     } catch (e) {
       console.error('Error parsing response:', e);
