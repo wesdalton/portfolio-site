@@ -164,6 +164,13 @@ h1 {
   color: var(--muted);
 }
 
+.entry-body > .entry-link {
+  margin-left: 10px;
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--muted);
+}
+
 .site-footer {
   margin-top: 96px;
   color: var(--muted);
