@@ -9,7 +9,7 @@ const work: Entry[] = [
   {
     name: 'Witness',
     year: '2026',
-    href: 'https://witness-evaluation-lab.beigeglade34.chatgpt.site',
+    href: 'https://wesdalton.github.io/witness/',
     text: 'Do AI agents stop checking when their peers agree? A grounded test case, a toy model, and a first real-model pilot.',
   },
   {

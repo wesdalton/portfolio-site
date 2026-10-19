@@ -30,7 +30,7 @@ export default function Intro() {
       <p className="now">
         <span className="now-label">Now</span>
         <span>
-          Running the next <a href="https://witness-evaluation-lab.beigeglade34.chatgpt.site">Witness</a>{' '}
+          Running the next <a href="https://wesdalton.github.io/witness/">Witness</a>{' '}
           experiment: do AI agents stop checking for themselves when their peers agree?
         </span>
       </p>
