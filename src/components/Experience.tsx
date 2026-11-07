@@ -29,7 +29,7 @@ const experience: Entry[] = [
     name: 'Flora',
     year: '2024',
     href: 'https://flora.ai/',
-    text: 'Software engineer intern. Built the node-based pipeline that chains image, video, and text models across 10,000+ daily generations.',
+    text: 'Software engineer intern. Helped build the alpha of Flora’s node-based canvas, which chains image, video, and text models into workflows.',
   },
 ];
 

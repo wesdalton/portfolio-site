@@ -29,20 +29,20 @@ const research: Entry[] = [
 const projects: Entry[] = [
   {
     name: 'Mise',
-    year: '2025–',
+    year: '2025–2026',
     href: 'https://bookmise.com/archive',
-    text: 'A restaurant booking app for iOS that I build and run alone. 350 users, all through word of mouth.',
+    text: 'A native iOS app I solo-developed that books hard-to-get restaurant tables by integrating Resy, OpenTable, and SevenRooms.',
   },
   {
     name: 'Respire',
     year: '2025',
     href: 'https://try.respire.cloud',
-    text: 'Reads WHOOP sleep, HRV, and strain data to flag burnout risk early.',
+    text: 'A web app that reads WHOOP sleep, HRV, and strain data to flag burnout risk up to a week early.',
   },
   {
     name: 'InstaLite',
     year: '2025',
-    text: 'A social app with ranked feeds and real-time chat. Course project; code private.',
+    text: 'A social app with ranked feeds, real-time chat, and facial recognition, stress-tested at 10,000+ concurrent users with sub-second latency. Course project; code private.',
   },
   {
     name: 'Headline classifier',
